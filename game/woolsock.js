@@ -35,7 +35,7 @@ Q.scene("level1",function(stage) {
   // stage.insert(new Q.Tower({ x: 180, y: 50 }));
 });
 
-Q.load("tiles.png, background-wall.png", function() {
+Q.load("tiles.png, background-wall.png, level.json", function() {
   // Sprites sheets can be created manually
   Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
 
