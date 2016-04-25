@@ -7,6 +7,81 @@ var Q = window.Q = Quintus()
         // And turn on default input controls and touch input (for UI)
         .controls().touch()
 
+// ## Player Sprite
+// The very basic player sprite, this is just a normal sprite
+// using the player sprite sheet with default controls added to it.
+Q.Sprite.extend("Gerev",{
+
+  // the init constructor is called on creation
+  init: function(p) {
+
+    // You can call the parent's constructor with this._super(..)
+    this._super(p, {
+      sheet: "gerev",  // Setting a sprite sheet sets sprite width and height
+      x: 410,           // You can also set additional properties that can
+      y: 90             // be overridden on object creation
+    });
+
+    // Add in pre-made components to get up and running quickly
+    // The `2d` component adds in default 2d collision detection
+    // and kinetics (velocity, gravity)
+    // The `platformerControls` makes the player controllable by the
+    // default input actions (left, right to move,  up or action to jump)
+    // It also checks to make sure the player is on a horizontal surface before
+    // letting them jump.
+    this.add('2d, platformerControls');
+
+    // Write event handlers to respond hook into behaviors.
+    // hit.sprite is called everytime the player collides with a sprite
+    this.on("hit.sprite",function(collision) {
+
+      // Check the collision, if it's the Tower, you win!
+      // if(collision.obj.isA("Tower")) {
+      //   Q.stageScene("endGame",1, { label: "You Won!" }); 
+      //   this.destroy();
+      // }
+    });
+
+  }
+
+});
+
+Q.Sprite.extend("Zemer",{
+
+  // the init constructor is called on creation
+  init: function(p) {
+
+    // You can call the parent's constructor with this._super(..)
+    this._super(p, {
+      sheet: "zemer",  // Setting a sprite sheet sets sprite width and height
+      x: 420,           // You can also set additional properties that can
+      y: 90             // be overridden on object creation
+    });
+
+    // Add in pre-made components to get up and running quickly
+    // The `2d` component adds in default 2d collision detection
+    // and kinetics (velocity, gravity)
+    // The `platformerControls` makes the player controllable by the
+    // default input actions (left, right to move,  up or action to jump)
+    // It also checks to make sure the player is on a horizontal surface before
+    // letting them jump.
+    this.add('2d, platformerControls');
+
+    // Write event handlers to respond hook into behaviors.
+    // hit.sprite is called everytime the player collides with a sprite
+    this.on("hit.sprite",function(collision) {
+
+      // Check the collision, if it's the Tower, you win!
+      // if(collision.obj.isA("Tower")) {
+      //   Q.stageScene("endGame",1, { label: "You Won!" }); 
+      //   this.destroy();
+      // }
+    });
+
+  }
+
+});
+
 // ## Level1 scene
 // Create a new scene called level 1
 Q.scene("level1",function(stage) {
@@ -21,7 +96,8 @@ Q.scene("level1",function(stage) {
 
 
   // Create the player and add them to the stage
-  // var player = stage.insert(new Q.Player());
+  var gerev = stage.insert(new Q.Gerev());
+  var zemer = stage.insert(new Q.Zemer());
 
   // Give the stage a moveable viewport and tell it
   // to follow the player.
@@ -35,15 +111,22 @@ Q.scene("level1",function(stage) {
   // stage.insert(new Q.Tower({ x: 180, y: 50 }));
 });
 
-Q.load("tiles.png, background-wall.png, level.json", function() {
-  // Sprites sheets can be created manually
-  Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
+Q.load(
+  "tiles.png, gerev.png, zemer.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
+  function() {
+    // Sprites sheets can be created manually
+    Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
+    Q.sheet("gerev","gerev.png", { tilew: 32, tileh: 32 });
+    Q.sheet("zemer","zemer.png", { tilew: 32, tileh: 32 });
+    Q.sheet("ladder","ladder.png", { tilew: 32, tileh: 32 });
+    Q.sheet("on_switch","on_switch.png", { tilew: 32, tileh: 32 });
+    Q.sheet("off_switch","off_switch.png", { tilew: 32, tileh: 32 });
 
-  // Or from a .json asset that defines sprite locations
-  // Q.compileSheets("sprites.png","sprites.json");
+    // Or from a .json asset that defines sprite locations
+    // Q.compileSheets("sprites.png","sprites.json");
 
-  // Finally, call stageScene to run the game
-  Q.stageScene("level1");
+    // Finally, call stageScene to run the game
+    Q.stageScene("level1");
 });
 
 
