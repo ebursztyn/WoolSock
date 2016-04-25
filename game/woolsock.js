@@ -7,6 +7,27 @@ var Q = window.Q = Quintus()
         // And turn on default input controls and touch input (for UI)
         .controls().touch()
 
+Q.Sprite.extend("Switch", {
+
+  init: function(p) {
+    this._super(p, { 
+      sheet: 'off_switch',
+      sensor: true
+    });
+  },
+
+  turnOn: function() {
+    this.p.sheet = "on_switch";
+  },
+
+  turnOff: function() {
+    this.p.sheet = "off_switch";
+  }
+
+});
+
+
+
 // ## Player Sprite
 // The very basic player sprite, this is just a normal sprite
 // using the player sprite sheet with default controls added to it.
@@ -18,8 +39,9 @@ Q.Sprite.extend("Gerev",{
     // You can call the parent's constructor with this._super(..)
     this._super(p, {
       sheet: "gerev",  // Setting a sprite sheet sets sprite width and height
-      x: 410,           // You can also set additional properties that can
-      y: 90             // be overridden on object creation
+      x: 650,           // You can also set additional properties that can
+      y: 650,             // be overridden on object creation
+      jumpSpeed: -280
     });
 
     // Add in pre-made components to get up and running quickly
@@ -33,16 +55,32 @@ Q.Sprite.extend("Gerev",{
 
     // Write event handlers to respond hook into behaviors.
     // hit.sprite is called everytime the player collides with a sprite
-    this.on("hit.sprite",function(collision) {
 
-      // Check the collision, if it's the Tower, you win!
-      // if(collision.obj.isA("Tower")) {
-      //   Q.stageScene("endGame",1, { label: "You Won!" }); 
-      //   this.destroy();
-      // }
+    this.on("jumping",function() {
+      if (this.p.hasZemer) {
+      }
+      if (collision.obj.isA("Zemer")) {  
+        collision.obj.p.vy = this.p.vy;
+      } 
     });
 
-  }
+    this.on("hit.sprite",function(collision) {
+
+      if (collision.obj.isA("Switch")) {
+        collision.obj.turnOn();
+      } 
+    });
+
+  },
+
+  step: function(dt) {
+        if(Q.inputs['left'] && this.p.direction == 'right') {
+            this.p.flip = false;
+        } 
+        if(Q.inputs['right']  && this.p.direction == 'left') {
+            this.p.flip = 'x';                    
+        }
+    }   
 
 });
 
@@ -54,8 +92,9 @@ Q.Sprite.extend("Zemer",{
     // You can call the parent's constructor with this._super(..)
     this._super(p, {
       sheet: "zemer",  // Setting a sprite sheet sets sprite width and height
-      x: 420,           // You can also set additional properties that can
-      y: 90             // be overridden on object creation
+      x: 660,           // You can also set additional properties that can
+      y: 650,             // be overridden on object creation
+      jumpSpeed: -600
     });
 
     // Add in pre-made components to get up and running quickly
@@ -65,17 +104,28 @@ Q.Sprite.extend("Zemer",{
     // default input actions (left, right to move,  up or action to jump)
     // It also checks to make sure the player is on a horizontal surface before
     // letting them jump.
-    this.add('2d, platformerControls');
+    this.add('2d, platformerControls2');
 
     // Write event handlers to respond hook into behaviors.
     // hit.sprite is called everytime the player collides with a sprite
+    this.on("jump", function(entity) {
+        
+    });
+
+    this.on("bump.bottom",function(collision) {
+
+      if (collision.obj.isA("Gerev")) {
+        //this.p.sensor = true;
+        this.p.x = collision.obj.p.x;
+        this.p.y = collision.obj.p.y - 32; 
+      } 
+    });
+
     this.on("hit.sprite",function(collision) {
 
-      // Check the collision, if it's the Tower, you win!
-      // if(collision.obj.isA("Tower")) {
-      //   Q.stageScene("endGame",1, { label: "You Won!" }); 
-      //   this.destroy();
-      // }
+      if (collision.obj.isA("Switch")) {
+        collision.obj.turnOn();
+      } 
     });
 
   }
@@ -98,6 +148,8 @@ Q.scene("level1",function(stage) {
   // Create the player and add them to the stage
   var gerev = stage.insert(new Q.Gerev());
   var zemer = stage.insert(new Q.Zemer());
+
+  var floor1switch = stage.insert(new Q.Switch({x: 80, y: 720}));
 
   // Give the stage a moveable viewport and tell it
   // to follow the player.
