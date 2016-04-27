@@ -177,6 +177,8 @@ Q.load(
     Q.sheet("ladder","ladder.png", { tilew: 32, tileh: 32 });
     Q.sheet("on_switch","on_switch.png", { tilew: 32, tileh: 32 });
     Q.sheet("off_switch","off_switch.png", { tilew: 32, tileh: 32 });
+    Q.sheet("carrot","carrot.png", { tilew: 32, tileh: 32 });
+    Q.sheet("cabbage","cabbage.png", { tilew: 32, tileh: 32 });
 
     // Or from a .json asset that defines sprite locations
     // Q.compileSheets("sprites.png","sprites.json");
