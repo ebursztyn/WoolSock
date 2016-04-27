@@ -28,10 +28,17 @@ Q.Sprite.extend("Switch", {
       sheet: 'off_switch',
       sensor: true
     });
+    this.board = p.board;
+    this.changes = p.changes;
   },
 
   turnOn: function() {
     this.p.sheet = "on_switch";
+
+    this.changeBack = [];
+    for (var i = 0; i < this.changes.length; i++) {
+      this.board.setTile(this.changes[i].x, this.changes[i].y, this.changes[i].to);
+    }
   },
 
   turnOff: function() {
@@ -150,9 +157,10 @@ Q.scene("level1",function(stage) {
   stage.insert(new Q.Repeater({ asset: "background-wall.png", speedX: 0.5, speedY: 0.5 }));
 
   // Add in a tile layer, and make it the collision layer
-  stage.collisionLayer(new Q.TileLayer({
+  var tileLayer = new Q.TileLayer({
                              dataAsset: 'level.json',
-                             sheet:     'tiles' }));
+                             sheet:     'tiles' });
+  stage.collisionLayer(tileLayer);
 
 
   // Create the player and add them to the stage
@@ -160,7 +168,7 @@ Q.scene("level1",function(stage) {
   var zemer = Q.zemer = stage.insert(new Q.Zemer());
   zemer.p.ignoreControls = true;
 
-  var floor1switch = stage.insert(new Q.Switch({x: 80, y: 720}));
+  var floor1switch = stage.insert(new Q.Switch({x: 300, y: 720, board: tileLayer, changes: [{x: 10, y: 10, to:2}]}));
 
   var carrot = stage.insert(new Q.PowerUp({x: 450, y: 220, asset: 'carrot.png'}));
   var cabbage = stage.insert(new Q.PowerUp({x: 650, y: 220, asset: 'cabbage.png'}));
