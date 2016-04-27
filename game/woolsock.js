@@ -162,7 +162,13 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  "tiles.png, gerev.png, zemer.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
+  "level.json,
+  background-wall.png, 
+  tiles.png, 
+  gerev.png, zemer.png, 
+  cabbage.png, carrot.png,
+  ladder.png,
+  on_switch.png, off_switch.png", 
   function() {
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
