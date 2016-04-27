@@ -47,6 +47,18 @@ Q.Sprite.extend("Switch", {
 
 });
 
+Q.Sprite.extend("Football", {
+
+  init: function(p) {
+    this._super(p, { 
+      sheet: "football",
+      x: 1150,
+      y: 97, 
+    });
+  }
+
+});
+
 // ## Player Sprite
 // The very basic player sprite, this is just a normal sprite
 // using the player sprite sheet with default controls added to it.
@@ -173,6 +185,8 @@ Q.scene("level1",function(stage) {
   var carrot = stage.insert(new Q.PowerUp({x: 450, y: 220, asset: 'carrot.png'}));
   var cabbage = stage.insert(new Q.PowerUp({x: 650, y: 220, asset: 'cabbage.png'}));
 
+  var football = stage.insert(new Q.Football());
+
   // Give the stage a moveable viewport and tell it
   // to follow the player.
   // stage.add("viewport").follow(player);
@@ -186,13 +200,14 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  "tiles.png, gerev.png, zemer.png, carrot.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
+  "tiles.png, gerev.png, zemer.png, carrot.png, football.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
   function() {
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
     Q.sheet("gerev","gerev.png", { tilew: 32, tileh: 32 });
     Q.sheet("zemer","zemer.png", { tilew: 32, tileh: 32 });
     Q.sheet("ladder","ladder.png", { tilew: 32, tileh: 32 });
+    Q.sheet("football","football.png", { tilew: 64, tileh: 64 });
     Q.sheet("on_switch","on_switch.png", { tilew: 32, tileh: 32 });
     Q.sheet("off_switch","off_switch.png", { tilew: 32, tileh: 32 });
     Q.sheet("carrot","carrot.png", { tilew: 32, tileh: 32 });
