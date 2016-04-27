@@ -7,6 +7,16 @@ var Q = window.Q = Quintus()
         // And turn on default input controls and touch input (for UI)
         .controls().touch()
 
+Q.Sprite.extend("PowerUp", {
+
+  init: function(p, resource) {
+    this._super(p, { 
+      sensor: true
+    });
+  }
+
+});
+
 Q.Sprite.extend("Switch", {
 
   init: function(p) {
@@ -149,6 +159,9 @@ Q.scene("level1",function(stage) {
 
   var floor1switch = stage.insert(new Q.Switch({x: 80, y: 720}));
 
+  var carrot = stage.insert(new Q.PowerUp({x: 450, y: 220, asset: 'carrot.png'}));
+  var cabbage = stage.insert(new Q.PowerUp({x: 650, y: 220, asset: 'cabbage.png'}));
+
   // Give the stage a moveable viewport and tell it
   // to follow the player.
   // stage.add("viewport").follow(player);
@@ -162,13 +175,7 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  "level.json,
-  background-wall.png, 
-  tiles.png, 
-  gerev.png, zemer.png, 
-  cabbage.png, carrot.png,
-  ladder.png,
-  on_switch.png, off_switch.png", 
+  "tiles.png, gerev.png, zemer.png, carrot.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
   function() {
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
