@@ -94,6 +94,10 @@ Q.Sprite.extend("Gerev",{
       if (collision.obj.isA("Switch")) {
         collision.obj.turnOn();
       } 
+      if (obj.isA("PowerUp")) {
+        this.p.scale = 1.5;
+        obj.p.opacity = 0;
+      } 
     });
 
   },
@@ -119,8 +123,8 @@ Q.Sprite.extend("Zemer",{
     // You can call the parent's constructor with this._super(..)
     this._super(p, {
       sheet: "zemer",  // Setting a sprite sheet sets sprite width and height
-      x: 660,           // You can also set additional properties that can
-      y: 650,             // be overridden on object creation
+      x: 690,           // You can also set additional properties that can
+      y: 200,             // be overridden on object creation
       jumpSpeed: -600
     });
 
@@ -140,8 +144,13 @@ Q.Sprite.extend("Zemer",{
     });
 
     this.on("hit.sprite",function(collision) {
-      if (collision.obj.isA("Switch")) {
-        collision.obj.turnOn();
+      var obj = collision.obj;
+      if (obj.isA("Switch")) {
+        obj.turnOn();
+      } 
+      if (obj.isA("PowerUp")) {
+        this.p.scale = 1.5;
+        obj.p.opacity = 0;
       } 
     });
 
