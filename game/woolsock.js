@@ -243,8 +243,8 @@ Q.load(
 Q.el.addEventListener('keydown',function(e) {
   if (e.code=='Space') {
     Q.GameStatus.currentPlayer = Q.GameStatus.currentPlayer == "Gerev" ? "Zemer" : "Gerev";
-    Q.gerev.p.ignoreControls = Q.GameStatus.currentPlayer == "Gerev";
-    Q.zemer.p.ignoreControls = Q.GameStatus.currentPlayer == "Zemer";
+    Q.gerev.p.ignoreControls = Q.GameStatus.currentPlayer == "Zemer";
+    Q.zemer.p.ignoreControls = Q.GameStatus.currentPlayer == "Gerev";
   }
 });
 
