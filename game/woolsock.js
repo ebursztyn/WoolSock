@@ -53,7 +53,17 @@ Q.Sprite.extend("Football", {
     this._super(p, { 
       sheet: "football",
       x: 1150,
-      y: 97, 
+      y: 95, 
+    });
+
+    this.add('2d');
+
+    this.on("bump.left",function(collision) {
+      if(collision.obj.isA("Gerev") || collision.obj.isA("Zemer")) { 
+         if (collision.obj.p.scale > 1) {
+           this.p.vx = 50;
+         }
+      }
     });
   }
 
