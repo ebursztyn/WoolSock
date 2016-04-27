@@ -26,8 +26,6 @@ Q.Sprite.extend("Switch", {
 
 });
 
-
-
 // ## Player Sprite
 // The very basic player sprite, this is just a normal sprite
 // using the player sprite sheet with default controls added to it.
@@ -39,7 +37,7 @@ Q.Sprite.extend("Gerev",{
     // You can call the parent's constructor with this._super(..)
     this._super(p, {
       sheet: "gerev",  // Setting a sprite sheet sets sprite width and height
-      x: 650,           // You can also set additional properties that can
+      x: 450,           // You can also set additional properties that can
       y: 650,             // be overridden on object creation
       jumpSpeed: -280
     });
