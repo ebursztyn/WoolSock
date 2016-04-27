@@ -7,9 +7,13 @@ var Q = window.Q = Quintus()
         // And turn on default input controls and touch input (for UI)
         .controls().touch()
 
+Q.GameStatus = {
+  currentPlayer: "Gerev"
+};
+
 Q.Sprite.extend("PowerUp", {
 
-  init: function(p, resource) {
+  init: function(p) {
     this._super(p, { 
       sensor: true
     });
@@ -44,6 +48,8 @@ Q.Sprite.extend("Gerev",{
   // the init constructor is called on creation
   init: function(p) {
 
+    this.name = "Gerev";
+
     // You can call the parent's constructor with this._super(..)
     this._super(p, {
       sheet: "gerev",  // Setting a sprite sheet sets sprite width and height
@@ -64,14 +70,6 @@ Q.Sprite.extend("Gerev",{
     // Write event handlers to respond hook into behaviors.
     // hit.sprite is called everytime the player collides with a sprite
 
-    this.on("jumping",function() {
-      if (this.p.hasZemer) {
-      }
-      if (collision.obj.isA("Zemer")) {  
-        collision.obj.p.vy = this.p.vy;
-      } 
-    });
-
     this.on("hit.sprite",function(collision) {
 
       if (collision.obj.isA("Switch")) {
@@ -82,13 +80,15 @@ Q.Sprite.extend("Gerev",{
   },
 
   step: function(dt) {
+    if (!this.p.ignoreControls) {
         if(Q.inputs['left'] && this.p.direction == 'right') {
             this.p.flip = false;
         } 
         if(Q.inputs['right']  && this.p.direction == 'left') {
             this.p.flip = 'x';                    
         }
-    }   
+    }
+  }   
 
 });
 
@@ -112,7 +112,7 @@ Q.Sprite.extend("Zemer",{
     // default input actions (left, right to move,  up or action to jump)
     // It also checks to make sure the player is on a horizontal surface before
     // letting them jump.
-    this.add('2d, platformerControls2');
+    this.add('2d, platformerControls');
 
     // Write event handlers to respond hook into behaviors.
     // hit.sprite is called everytime the player collides with a sprite
@@ -120,23 +120,25 @@ Q.Sprite.extend("Zemer",{
         
     });
 
-    this.on("bump.bottom",function(collision) {
-
-      if (collision.obj.isA("Gerev")) {
-        //this.p.sensor = true;
-        this.p.x = collision.obj.p.x;
-        this.p.y = collision.obj.p.y - 32; 
-      } 
-    });
-
     this.on("hit.sprite",function(collision) {
-
       if (collision.obj.isA("Switch")) {
         collision.obj.turnOn();
       } 
     });
 
-  }
+
+  },
+
+  step: function(dt) {
+    if (!this.p.ignoreControls) {
+        if(Q.inputs['left'] && this.p.direction == 'right') {
+            this.p.flip = false;
+        } 
+        if(Q.inputs['right']  && this.p.direction == 'left') {
+            this.p.flip = 'x';                    
+        }
+    }
+  }   
 
 });
 
@@ -154,8 +156,9 @@ Q.scene("level1",function(stage) {
 
 
   // Create the player and add them to the stage
-  var gerev = stage.insert(new Q.Gerev());
-  var zemer = stage.insert(new Q.Zemer());
+  var gerev = Q.gerev = stage.insert(new Q.Gerev());
+  var zemer = Q.zemer = stage.insert(new Q.Zemer());
+  zemer.p.ignoreControls = true;
 
   var floor1switch = stage.insert(new Q.Switch({x: 80, y: 720}));
 
@@ -192,8 +195,16 @@ Q.load(
 
     // Finally, call stageScene to run the game
     Q.stageScene("level1");
+
 });
 
+Q.el.addEventListener('keydown',function(e) {
+  if (e.code=='Space') {
+    Q.GameStatus.currentPlayer = Q.GameStatus.currentPlayer == "Gerev" ? "Zemer" : "Gerev";
+    Q.gerev.p.ignoreControls = Q.GameStatus.currentPlayer == "Gerev";
+    Q.zemer.p.ignoreControls = Q.GameStatus.currentPlayer == "Zemer";
+  }
+});
 
 
 });
