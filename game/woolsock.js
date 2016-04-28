@@ -84,7 +84,7 @@ Q.Sprite.extend("Gerev",{
       sheet: "gerev",  // Setting a sprite sheet sets sprite width and height
       x: 450,           // You can also set additional properties that can
       y: 650,             // be overridden on object creation
-      jumpSpeed: -280
+      jumpSpeed: -380
     });
 
     // Add in pre-made components to get up and running quickly
@@ -144,7 +144,7 @@ Q.Sprite.extend("Zemer",{
     this._super(p, {
       sheet: "zemer",  // Setting a sprite sheet sets sprite width and height
       x: 690,           // You can also set additional properties that can
-      y: 200,             // be overridden on object creation
+      y: 650,             // be overridden on object creation
       jumpSpeed: -600
     });
 
@@ -219,7 +219,83 @@ Q.scene("level1",function(stage) {
   var zemer = Q.zemer = stage.insert(new Q.Zemer());
   zemer.p.ignoreControls = true;
 
-  var floor1switch = stage.insert(new Q.Switch({x: 300, y: 720, board: tileLayer, changes: [{x: 10, y: 10, to:2}]}));
+  /*
+
+Switch1: 22 by 2 => opens up (31, 19) and (32, 19)
+Switch2: 22 by 20 => opens up (7, 19), (7, 20), (7, 21), (7, 22)
+Switch3: 34 by 19 => adds up (16, 20), (17, 18)
+Switch4: 13 by 17 => opesn up (30, 15), (30, 16), (30, 17), (30, 18)
+Switch5: 31 by 12 => adds up (1, 17), (1, 15)
+Switch6: 5 by 12 => opens up (34, 9), (35, 9)
+Swtich7: 29 by 7 => adds up (8, 14)
+Switch8: 13 by 12 => opens up (27, 5), (27, 6), (27, 7), (27, 8)
+Switch9: 27 by 17 => adds up (17 ,12), (16, 10)
+Swtich10: 3 by 7 => opens up (21, 9), (22, 9)
+Switch11: 20 by 7 => adds up (7, 7), (8, 5)
+
+*/
+
+  switches = [
+    {
+      x: 2, 
+      y: 22, 
+      changes: [{x: 31, y: 19, to: 0}, {x: 32, y: 19, to: 0}]
+    },
+    {
+      x: 20, 
+      y: 22, 
+      changes: [{x: 7, y: 19, to: 0}, {x: 7, y: 20, to: 0}, {x: 7, y: 21, to: 0}, {x: 7, y: 22, to: 0}]
+    },
+    {
+      x: 34, 
+      y: 17, 
+      changes: [{x: 16, y: 22, to: 1}, {x: 17, y: 20, to: 1}]
+    },
+    {
+      x: 13, 
+      y: 17, 
+      changes: [{x: 30, y: 15, to: 0}, {x: 30, y: 16, to: 0}, {x: 30, y: 17, to: 0}, {x: 30, y: 18, to: 0}]
+    },
+    {
+      x: 31, 
+      y: 12, 
+      changes: [{x: 1, y: 17, to: 1}, {x: 1, y: 15, to: 1}]
+    },
+    {
+      x: 5, 
+      y: 12, 
+      changes: [{x: 34, y: 9, to: 0}, {x: 35, y: 9, to: 0}]
+    },
+    {
+      x: 29, 
+      y: 7, 
+      changes: [{x: 8, y: 14, to: 1}]
+    },
+    {
+      x: 13, 
+      y: 12, 
+      changes: [{x: 27, y: 5, to: 0}, {x: 27, y: 6, to: 0}, {x: 27, y: 7, to: 0}, {x: 27, y: 8, to: 0}]
+    },
+    {
+      x: 25, 
+      y: 17, 
+      changes: [{x: 17, y: 12, to: 1}, {x: 16, y: 10, to: 1}]
+    },
+    {
+      x: 2, 
+      y: 7, 
+      changes: [{x: 21, y: 9, to: 0}, {x: 22, y: 9, to: 0}]
+    },
+    {
+      x: 20, 
+      y: 7, 
+      changes: [{x: 7, y: 7, to: 1}, {x: 8, y: 5, to: 1}]
+    }
+  ];
+
+  for (var i = 0; i < switches.length; i++) {
+    var currSwitch = stage.insert(new Q.Switch({x: switches[i].x * 32 + 16, y: switches[i].y * 32 + 16, board: tileLayer, changes: switches[i].changes}));
+  }
 
   var carrot = stage.insert(new Q.PowerUp({x: 450, y: 220, asset: 'carrot.png'}));
   var cabbage = stage.insert(new Q.PowerUp({x: 650, y: 220, asset: 'cabbage.png'}));
