@@ -121,7 +121,17 @@ Q.Sprite.extend("Gerev",{
             this.p.flip = 'x';                    
         }
     }
-  }   
+  },
+
+  restoreInteraction: function() {
+    this.p.ignoreControls = false;
+  },
+
+  stopInteraction: function() {
+    this.p.ignoreControls = true;
+    this.p.vx = 0;
+    this.p.vy = 0;
+  }      
 
 });
 
@@ -176,6 +186,16 @@ Q.Sprite.extend("Zemer",{
             this.p.flip = 'x';                    
         }
     }
+  },
+
+  restoreInteraction: function() {
+    this.p.ignoreControls = false;
+  },
+
+  stopInteraction: function() {
+    this.p.ignoreControls = true;
+    this.p.vx = 0;
+    this.p.vy = 0;
   }   
 
 });
@@ -243,8 +263,18 @@ Q.load(
 Q.el.addEventListener('keydown',function(e) {
   if (e.code=='Space') {
     Q.GameStatus.currentPlayer = Q.GameStatus.currentPlayer == "Gerev" ? "Zemer" : "Gerev";
-    Q.gerev.p.ignoreControls = Q.GameStatus.currentPlayer == "Zemer";
-    Q.zemer.p.ignoreControls = Q.GameStatus.currentPlayer == "Gerev";
+    if (Q.GameStatus.currentPlayer == "Zemer") {
+      Q.zemer.restoreInteraction();
+    } else {
+      Q.zemer.stopInteraction();
+    }
+    if (Q.GameStatus.currentPlayer == "Gerev") {
+      Q.gerev.restoreInteraction();
+    } else {
+      Q.gerev.stopInteraction();
+    }
+//     Q.gerev.p.ignoreControls = Q.GameStatus.currentPlayer == "Zemer";
+//     Q.zemer.p.ignoreControls = Q.GameStatus.currentPlayer == "Gerev";
   }
 });
 
