@@ -328,7 +328,7 @@ Q.load(
 Q.el.addEventListener('keydown',function(e) {
   if (e.code=='Space') {
     Q.GameStatus.currentPlayer = Q.GameStatus.currentPlayer == "Gerev" ? "Zemer" : "Gerev";
-    Q.currentRabbitLogo.asset = Q.GameStatus.currentPlayer.toLowerCase();
+    Q.currentRabbitLogo.p.asset = Q.GameStatus.currentPlayer.toLowerCase() + ".png";
     if (Q.GameStatus.currentPlayer == "Zemer") {
       Q.zemer.restoreInteraction();
     } else {
