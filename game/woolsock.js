@@ -61,7 +61,7 @@ Q.Sprite.extend("Football", {
     this.on("bump.left",function(collision) {
       var obj = collision.obj;
       if(obj.isA("Gerev") || obj.isA("Zemer")) { 
-         if (obj.p.hasPowerUp > 1) {
+         if (obj.p.hasPowerUp) {
            this.p.vx = 50;
          }
       }
