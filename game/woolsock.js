@@ -69,9 +69,6 @@ Q.Sprite.extend("Football", {
 
 });
 
-// ## Player Sprite
-// The very basic player sprite, this is just a normal sprite
-// using the player sprite sheet with default controls added to it.
 Q.Sprite.extend("Gerev",{
 
   // the init constructor is called on creation
@@ -87,22 +84,13 @@ Q.Sprite.extend("Gerev",{
       jumpSpeed: -380
     });
 
-    // Add in pre-made components to get up and running quickly
-    // The `2d` component adds in default 2d collision detection
-    // and kinetics (velocity, gravity)
-    // The `platformerControls` makes the player controllable by the
-    // default input actions (left, right to move,  up or action to jump)
-    // It also checks to make sure the player is on a horizontal surface before
-    // letting them jump.
     this.add('2d, platformerControls');
-
-    // Write event handlers to respond hook into behaviors.
-    // hit.sprite is called everytime the player collides with a sprite
 
     this.on("hit.sprite",function(collision) {
 
-      if (collision.obj.isA("Switch")) {
-        collision.obj.turnOn();
+      var obj = collision.obj;
+      if (obj.isA("Switch")) {
+        obj.turnOn();
       } 
       if (obj.isA("PowerUp")) {
         this.p.scale = 1.5;
@@ -148,13 +136,6 @@ Q.Sprite.extend("Zemer",{
       jumpSpeed: -600
     });
 
-    // Add in pre-made components to get up and running quickly
-    // The `2d` component adds in default 2d collision detection
-    // and kinetics (velocity, gravity)
-    // The `platformerControls` makes the player controllable by the
-    // default input actions (left, right to move,  up or action to jump)
-    // It also checks to make sure the player is on a horizontal surface before
-    // letting them jump.
     this.add('2d, platformerControls');
 
     // Write event handlers to respond hook into behaviors.
@@ -302,16 +283,6 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
 
   var football = stage.insert(new Q.Football());
 
-  // Give the stage a moveable viewport and tell it
-  // to follow the player.
-  // stage.add("viewport").follow(player);
-
-  // // Add in a couple of enemies
-  // stage.insert(new Q.Enemy({ x: 700, y: 0 }));
-  // stage.insert(new Q.Enemy({ x: 800, y: 0 }));
-
-  // // Finally add in the tower goal
-  // stage.insert(new Q.Tower({ x: 180, y: 50 }));
 });
 
 Q.load(
@@ -349,8 +320,6 @@ Q.el.addEventListener('keydown',function(e) {
     } else {
       Q.gerev.stopInteraction();
     }
-//     Q.gerev.p.ignoreControls = Q.GameStatus.currentPlayer == "Zemer";
-//     Q.zemer.p.ignoreControls = Q.GameStatus.currentPlayer == "Gerev";
   }
 });
 
