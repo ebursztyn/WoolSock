@@ -290,6 +290,11 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
 
   var football = stage.insert(new Q.Football());
 
+  var label = stage.insert(new Q.UI.Text({x:150, y: 10, 
+                                                   label: ":ארנב פעיל" }));
+
+  var currentRabbitLogo = Q.currentRabbitLogo = stage.insert(new Q.Sprite({x: 75, y: 24, asset: "gerev.png"}));
+
 });
 
 Q.load(
@@ -317,6 +322,7 @@ Q.load(
 Q.el.addEventListener('keydown',function(e) {
   if (e.code=='Space') {
     Q.GameStatus.currentPlayer = Q.GameStatus.currentPlayer == "Gerev" ? "Zemer" : "Gerev";
+    Q.currentRabbitLogo.p.asset = Q.GameStatus.currentPlayer.toLowerCase() + ".png";
     if (Q.GameStatus.currentPlayer == "Zemer") {
       Q.zemer.restoreInteraction();
     } else {
