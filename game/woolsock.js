@@ -47,11 +47,11 @@ Q.Sprite.extend("Switch", {
 
 });
 
-Q.Sprite.extend("Football", {
+Q.Sprite.extend("Stone", {
 
   init: function(p) {
     this._super(p, { 
-      sheet: "football",
+      sheet: "stone",
       x: 1150,
       y: 95, 
     });
@@ -66,7 +66,13 @@ Q.Sprite.extend("Football", {
          }
       }
     });
-  }
+  },
+
+  step: function(dt) {
+    if (this.p.vy != 0) {
+      this.p.vx = 0;
+    }
+  },
 
 });
 
@@ -134,7 +140,7 @@ Q.Sprite.extend("Zemer",{
     this._super(p, {
       sheet: "zemer",  // Setting a sprite sheet sets sprite width and height
       x: 690,           // You can also set additional properties that can
-      y: 650,             // be overridden on object creation
+      y: 150,             // be overridden on object creation
       jumpSpeed: -600
     });
 
@@ -288,7 +294,7 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
   var carrot = stage.insert(new Q.PowerUp({x: 450, y: 220, asset: 'carrot.png'}));
   var cabbage = stage.insert(new Q.PowerUp({x: 650, y: 220, asset: 'cabbage.png'}));
 
-  var football = stage.insert(new Q.Football());
+  var stone = stage.insert(new Q.Stone());
 
   var label = stage.insert(new Q.UI.Text({x:150, y: 10, 
                                                    label: ":ארנב פעיל" }));
@@ -298,14 +304,14 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
 });
 
 Q.load(
-  "tiles.png, gerev.png, zemer.png, carrot.png, football.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
+  "tiles.png, gerev.png, zemer.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
   function() {
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
     Q.sheet("gerev","gerev.png", { tilew: 32, tileh: 32 });
     Q.sheet("zemer","zemer.png", { tilew: 32, tileh: 32 });
     Q.sheet("ladder","ladder.png", { tilew: 32, tileh: 32 });
-    Q.sheet("football","football.png", { tilew: 64, tileh: 64 });
+    Q.sheet("stone","stone.png", { tilew: 32, tileh: 32 });
     Q.sheet("on_switch","on_switch.png", { tilew: 32, tileh: 32 });
     Q.sheet("off_switch","off_switch.png", { tilew: 32, tileh: 32 });
     Q.sheet("carrot","carrot.png", { tilew: 32, tileh: 32 });
@@ -322,7 +328,7 @@ Q.load(
 Q.el.addEventListener('keydown',function(e) {
   if (e.code=='Space') {
     Q.GameStatus.currentPlayer = Q.GameStatus.currentPlayer == "Gerev" ? "Zemer" : "Gerev";
-    Q.currentRabbitLogo.p.asset = Q.GameStatus.currentPlayer.toLowerCase() + ".png";
+    Q.currentRabbitLogo.asset = Q.GameStatus.currentPlayer.toLowerCase();
     if (Q.GameStatus.currentPlayer == "Zemer") {
       Q.zemer.restoreInteraction();
     } else {
