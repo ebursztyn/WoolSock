@@ -59,8 +59,9 @@ Q.Sprite.extend("Football", {
     this.add('2d');
 
     this.on("bump.left",function(collision) {
-      if(collision.obj.isA("Gerev") || collision.obj.isA("Zemer")) { 
-         if (collision.obj.p.scale > 1) {
+      var obj = collision.obj;
+      if(obj.isA("Gerev") || obj.isA("Zemer")) { 
+         if (obj.p.hasPowerUp > 1) {
            this.p.vx = 50;
          }
       }
@@ -93,6 +94,7 @@ Q.Sprite.extend("Gerev",{
         obj.turnOn();
       } 
       if (obj.isA("PowerUp")) {
+        this.p.hasPowerUp = true;
         this.p.scale = 1.5;
         obj.p.opacity = 0;
       } 
@@ -136,6 +138,8 @@ Q.Sprite.extend("Zemer",{
       jumpSpeed: -600
     });
 
+
+
     this.add('2d, platformerControls');
 
     // Write event handlers to respond hook into behaviors.
@@ -150,6 +154,7 @@ Q.Sprite.extend("Zemer",{
         obj.turnOn();
       } 
       if (obj.isA("PowerUp")) {
+        this.p.hasPowerUp = true;
         this.p.scale = 1.5;
         obj.p.opacity = 0;
       } 
@@ -198,6 +203,8 @@ Q.scene("level1",function(stage) {
   // Create the player and add them to the stage
   var gerev = Q.gerev = stage.insert(new Q.Gerev());
   var zemer = Q.zemer = stage.insert(new Q.Zemer());
+  gerev.p.direction = 'left';
+  zemer.p.direction = 'left';
   zemer.p.ignoreControls = true;
 
   /*
