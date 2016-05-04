@@ -121,10 +121,12 @@ Q.Sprite.extend("Gerev",{
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
+    this.p.sheet = "gerev_glow";
   },
 
   stopInteraction: function() {
     this.p.ignoreControls = true;
+    this.p.sheet = "gerev";
     this.p.vx = 0;
     this.p.vy = 0;
   }      
@@ -182,10 +184,12 @@ Q.Sprite.extend("Zemer",{
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
+    this.p.sheet = "zemer_glow";
   },
 
   stopInteraction: function() {
     this.p.ignoreControls = true;
+    this.p.sheet = "zemer";
     this.p.vx = 0;
     this.p.vy = 0;
   }   
@@ -211,7 +215,8 @@ Q.scene("level1",function(stage) {
   var zemer = Q.zemer = stage.insert(new Q.Zemer());
   gerev.p.direction = 'left';
   zemer.p.direction = 'left';
-  zemer.p.ignoreControls = true;
+  gerev.restoreInteraction();
+  zemer.stopInteraction();
 
   /*
 
@@ -310,12 +315,14 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
 });
 
 Q.load(
-  "tiles.png, spacebar.png, arrows.png, gerev.png, zemer.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
+  "tiles.png, spacebar.png, arrows.png, gerev.png, gerev_glow.png, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
   function() {
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
     Q.sheet("gerev","gerev.png", { tilew: 32, tileh: 32 });
+    Q.sheet("gerev_glow","gerev_glow.png", { tilew: 32, tileh: 32 });
     Q.sheet("zemer","zemer.png", { tilew: 32, tileh: 32 });
+    Q.sheet("zemer_glow","zemer_glow.png", { tilew: 32, tileh: 32 });
     Q.sheet("ladder","ladder.png", { tilew: 32, tileh: 32 });
     Q.sheet("stone","stone.png", { tilew: 32, tileh: 32 });
     Q.sheet("on_switch","on_switch.png", { tilew: 32, tileh: 32 });
