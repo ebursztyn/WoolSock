@@ -304,13 +304,13 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
   var currentRabbitLabel = stage.insert(new Q.UI.Text({x:150, y: 10, 
                                                    label: ":ארנב פעיל" }));
 
-  var currentRabbitLogo = Q.currentRabbitLogo = stage.insert(new Q.Sprite({x: 75, y: 24, asset: "gerev.png"}));
+  var currentRabbitLogo = Q.currentRabbitLogo = stage.insert(new Q.Sprite({x: 75, y: 24, asset: "gerev.png", sensor: true}));
 
   stage.insert(new Q.UI.Text({x:750, y: 13, opacity: 1, label: "הזזת ארנב" }));
-  stage.insert(new Q.Sprite({x: 850, y: 28, scale: 0.5, opacity: 1, asset: "arrows.png"}));
+  stage.insert(new Q.Sprite({x: 850, y: 28, scale: 0.5, opacity: 1, asset: "arrows.png", sensor: true}));
 
   stage.insert(new Q.UI.Text({x:740, y: 51, opacity: 1, label: "החלפת ארנב" }));
-  stage.insert(new Q.Sprite({x: 850, y: 66, scale: 0.5, asset: "spacebar.png"}));
+  stage.insert(new Q.Sprite({x: 850, y: 66, scale: 0.5, asset: "spacebar.png", sensor: true}));
 
 });
 
