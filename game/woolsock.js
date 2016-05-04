@@ -62,18 +62,19 @@ Q.Sprite.extend("Stone", {
       var obj = collision.obj;
       if(obj.isA("Gerev") || obj.isA("Zemer")) { 
          if (obj.p.hasPowerUp) {
-           this.p.vx = 50;
+           this.p.vx = 100;
          }
       }
     });
-  },
 
-  step: function(dt) {
-    if (this.p.vy != 0) {
-      this.p.vx = 0;
-    }
-  },
-
+    this.on("bump.bottom",function(collision) {
+      var obj = collision.obj;
+      if(obj.isA("Erez")) { 
+           this.p.vy -= 50 * (collision.impact/150);
+      }
+    });
+  }
+  
 });
 
 Q.Sprite.extend("Gerev",{
@@ -196,6 +197,22 @@ Q.Sprite.extend("Zemer",{
 
 });
 
+Q.Sprite.extend("Erez",{
+
+  // the init constructor is called on creation
+  init: function(p) {
+
+    // You can call the parent's constructor with this._super(..)
+    this._super(p, {
+      sheet: "erez",  // Setting a sprite sheet sets sprite width and height
+      x: 1295,           // You can also set additional properties that can
+      y: 608,             // be overridden on object creation
+      scale: 0.3
+    });
+  }
+
+});
+
 // ## Level1 scene
 // Create a new scene called level 1
 Q.scene("level1",function(stage) {
@@ -209,6 +226,7 @@ Q.scene("level1",function(stage) {
                              sheet:     'tiles' });
   stage.collisionLayer(tileLayer);
 
+  var erez = Q.erez = stage.insert(new Q.Erez());
 
   // Create the player and add them to the stage
   var gerev = Q.gerev = stage.insert(new Q.Gerev());
@@ -315,10 +333,11 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
 });
 
 Q.load(
-  "tiles.png, spacebar.png, arrows.png, gerev.png, gerev_glow.png, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
+  "tiles.png, spacebar.png, arrows.png, erez.png, gerev.png, gerev_glow.png, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
   function() {
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
+    Q.sheet("erez","erez.png", { tilew: 420, tileh: 647 });
     Q.sheet("gerev","gerev.png", { tilew: 32, tileh: 32 });
     Q.sheet("gerev_glow","gerev_glow.png", { tilew: 32, tileh: 32 });
     Q.sheet("zemer","zemer.png", { tilew: 32, tileh: 32 });
