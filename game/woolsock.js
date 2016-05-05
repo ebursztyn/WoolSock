@@ -52,8 +52,8 @@ Q.Sprite.extend("Stone", {
   init: function(p) {
     this._super(p, { 
       sheet: "stone",
-      x: 1150,
-      y: 95, 
+      x: 550,
+      y: 55, 
     });
 
     this.add('2d');
@@ -143,7 +143,7 @@ Q.Sprite.extend("Zemer",{
     this._super(p, {
       sheet: "zemer",  // Setting a sprite sheet sets sprite width and height
       x: 690,           // You can also set additional properties that can
-      y: 150,             // be overridden on object creation
+      y: 650,             // be overridden on object creation
       jumpSpeed: -600
     });
 
@@ -255,58 +255,58 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
   switches = [
     {
       x: 2, 
-      y: 22, 
-      changes: [{x: 31, y: 19, to: 0}, {x: 32, y: 19, to: 0}]
+      y: 19, 
+      changes: [{x: 27, y: 17, to: 0}]
     },
     {
-      x: 20, 
-      y: 22, 
-      changes: [{x: 7, y: 19, to: 0}, {x: 7, y: 20, to: 0}, {x: 7, y: 21, to: 0}, {x: 7, y: 22, to: 0}]
+      x: 16, 
+      y: 19, 
+      changes: [{x: 5, y: 18, to: 0}, {x: 5, y: 19, to: 0}, {x: 5, y: 20, to: 0}]
     },
     {
-      x: 34, 
-      y: 17, 
-      changes: [{x: 16, y: 22, to: 1}, {x: 17, y: 20, to: 1}]
+      x: 26, 
+      y: 15,  
+      changes: [{x: 12, y: 18, to: 1}, {x: 13, y: 20, to: 1}]
     },
     {
-      x: 13, 
-      y: 17, 
-      changes: [{x: 30, y: 15, to: 0}, {x: 30, y: 16, to: 0}, {x: 30, y: 17, to: 0}, {x: 30, y: 18, to: 0}]
+      x: 10, 
+      y: 15, 
+      changes: [{x: 24, y: 16, to: 0}, {x: 24, y: 15, to: 0}, {x: 24, y: 14, to: 0}]
     },
     {
-      x: 31, 
-      y: 12, 
-      changes: [{x: 1, y: 17, to: 1}, {x: 1, y: 15, to: 1}]
+      x: 26, 
+      y: 11, 
+      changes: [{x: 1, y: 15, to: 1}]
     },
     {
-      x: 5, 
-      y: 12, 
-      changes: [{x: 34, y: 9, to: 0}, {x: 35, y: 9, to: 0}]
+      x: 3, 
+      y: 11, 
+      changes: [{x: 26, y: 9, to: 0}, {x: 27, y: 9, to: 0}]
     },
     {
-      x: 29, 
+      x: 23, 
       y: 7, 
-      changes: [{x: 8, y: 14, to: 1}]
+      changes: [{x: 5, y: 13, to: 1}]
     },
     {
-      x: 13, 
-      y: 12, 
-      changes: [{x: 27, y: 5, to: 0}, {x: 27, y: 6, to: 0}, {x: 27, y: 7, to: 0}, {x: 27, y: 8, to: 0}]
+      x: 11, 
+      y: 11, 
+      changes: [{x: 21, y: 6, to: 0}, {x: 21, y: 7, to: 0}, {x: 21, y: 8, to: 0}]
     },
     {
-      x: 25, 
-      y: 17, 
-      changes: [{x: 17, y: 12, to: 1}, {x: 16, y: 10, to: 1}]
+      x: 19, 
+      y: 15, 
+      changes: [{x: 13, y: 11, to: 1}]
     },
     {
       x: 2, 
       y: 7, 
-      changes: [{x: 21, y: 9, to: 0}, {x: 22, y: 9, to: 0}]
+      changes: [{x: 17, y: 9, to: 0}]
     },
     {
-      x: 20, 
+      x: 16, 
       y: 7, 
-      changes: [{x: 7, y: 7, to: 1}, {x: 8, y: 5, to: 1}]
+      changes: [{x: 7, y: 8, to: 1}, {x: 8, y: 6, to: 1}]
     }
   ];
 
@@ -314,8 +314,8 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
     var currSwitch = stage.insert(new Q.Switch({x: switches[i].x * 32 + 16, y: switches[i].y * 32 + 16, board: tileLayer, changes: switches[i].changes}));
   }
 
-  var carrot = stage.insert(new Q.PowerUp({x: 450, y: 220, asset: 'carrot.png'}));
-  var cabbage = stage.insert(new Q.PowerUp({x: 650, y: 220, asset: 'cabbage.png'}));
+  var carrot = stage.insert(new Q.PowerUp({x: 417, y: 37, asset: 'carrot.png'}));
+  var cabbage = stage.insert(new Q.PowerUp({x: 576, y: 134, asset: 'cabbage.png'}));
 
   var stone = stage.insert(new Q.Stone());
 
