@@ -62,7 +62,7 @@ Q.Sprite.extend("Stone", {
       var obj = collision.obj;
       if(obj.isA("Gerev") || obj.isA("Zemer")) { 
          if (obj.p.hasPowerUp) {
-           this.p.vx = 100;
+           this.p.vx = 50;
          }
       }
     });
@@ -71,6 +71,8 @@ Q.Sprite.extend("Stone", {
       var obj = collision.obj;
       if(obj.isA("Erez")) { 
            this.p.vy -= 50 * (collision.impact/150);
+      } else {
+        this.p.vx = 0;
       }
     });
   }
