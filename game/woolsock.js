@@ -207,8 +207,8 @@ Q.Sprite.extend("Erez",{
     // You can call the parent's constructor with this._super(..)
     this._super(p, {
       sheet: "erez",  // Setting a sprite sheet sets sprite width and height
-      x: 1295,           // You can also set additional properties that can
-      y: 608,             // be overridden on object creation
+      x: 991,           // You can also set additional properties that can
+      y: 512,             // be overridden on object creation
       scale: 0.3
     });
   }
