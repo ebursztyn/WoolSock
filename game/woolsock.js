@@ -268,7 +268,7 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
     {
       x: 26, 
       y: 15,  
-      changes: [{x: 12, y: 18, to: 1}, {x: 13, y: 20, to: 1}]
+      changes: [{x: 12, y: 18, to: 2}, {x: 13, y: 20, to: 2}]
     },
     {
       x: 10, 
@@ -278,7 +278,7 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
     {
       x: 26, 
       y: 11, 
-      changes: [{x: 1, y: 15, to: 1}]
+      changes: [{x: 2, y: 15, to: 2}]
     },
     {
       x: 3, 
@@ -288,7 +288,7 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
     {
       x: 23, 
       y: 7, 
-      changes: [{x: 5, y: 13, to: 1}]
+      changes: [{x: 5, y: 13, to: 2}]
     },
     {
       x: 11, 
@@ -298,7 +298,7 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
     {
       x: 19, 
       y: 15, 
-      changes: [{x: 13, y: 11, to: 1}]
+      changes: [{x: 13, y: 11, to: 2}]
     },
     {
       x: 2, 
@@ -308,7 +308,7 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
     {
       x: 16, 
       y: 7, 
-      changes: [{x: 7, y: 8, to: 1}, {x: 8, y: 6, to: 1}]
+      changes: [{x: 7, y: 8, to: 2}, {x: 8, y: 6, to: 2}]
     }
   ];
 
