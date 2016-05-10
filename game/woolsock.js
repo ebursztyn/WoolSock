@@ -1,11 +1,11 @@
 window.addEventListener("load",function() {
 
 var Q = window.Q = Quintus()
-        .include("Sprites, Scenes, Input, 2D, Anim, Touch, UI")
+        .include("Audio, Sprites, Scenes, Input, 2D, Anim, Touch, UI")
         // Maximize this game to whatever the size of the browser is
         .setup({ maximize: true })
         // And turn on default input controls and touch input (for UI)
-        .controls().touch()
+        .controls().touch();
 
 Q.GameStatus = {
   currentPlayer: "Gerev"
@@ -33,11 +33,13 @@ Q.Sprite.extend("Switch", {
   },
 
   turnOn: function() {
-    this.p.sheet = "on_switch";
-
-    this.changeBack = [];
-    for (var i = 0; i < this.changes.length; i++) {
-      this.board.setTile(this.changes[i].x, this.changes[i].y, this.changes[i].to);
+    if (this.p.sheet != "on_switch") {
+      this.p.sheet = "on_switch";
+      Q.audio.play('press_switch.mp3');
+      this.changeBack = [];
+      for (var i = 0; i < this.changes.length; i++) {
+        this.board.setTile(this.changes[i].x, this.changes[i].y, this.changes[i].to);
+      }
     }
   },
 
@@ -62,6 +64,7 @@ Q.Sprite.extend("Stone", {
       var obj = collision.obj;
       if(obj.isA("Gerev") || obj.isA("Zemer")) { 
          if (obj.p.hasPowerUp) {
+           Q.audio.play('pushing_stone.mp3');
            this.p.vx = 50;
          }
       }
@@ -88,13 +91,14 @@ Q.Sprite.extend("Gerev",{
 
     // You can call the parent's constructor with this._super(..)
     this._super(p, {
-      sheet: "gerev",  // Setting a sprite sheet sets sprite width and height
+      sheet: "gerev_walk",  // Setting a sprite sheet sets sprite width and height
+      sprite: "gerev",
       x: 450,           // You can also set additional properties that can
       y: 650,             // be overridden on object creation
       jumpSpeed: -380
     });
 
-    this.add('2d, platformerControls');
+    this.add('2d, platformerControls, animation');
 
     this.on("hit.sprite",function(collision) {
 
@@ -103,6 +107,9 @@ Q.Sprite.extend("Gerev",{
         obj.turnOn();
       } 
       if (obj.isA("PowerUp")) {
+        if (!this.p.hasPowerUp) {
+          Q.audio.play('powerup.mp3');
+        }
         this.p.hasPowerUp = true;
         this.p.scale = 1.5;
         obj.p.opacity = 0;
@@ -113,23 +120,48 @@ Q.Sprite.extend("Gerev",{
 
   step: function(dt) {
     if (!this.p.ignoreControls) {
-        if(Q.inputs['left'] && this.p.direction == 'right') {
-            this.p.flip = false;
-        } 
-        if(Q.inputs['right']  && this.p.direction == 'left') {
-            this.p.flip = 'x';                    
+        if(this.p.vx > 0) {
+          if(this.p.landed > 0) {
+            this.play("gerev_walk_right");
+          } else {
+            if (this.p.vy < 0) {
+              this.play("gerev_jump_right");
+            } else {
+              this.play("gerev_land_right");
+            }
+          }
+          this.p.direction = "right";
+        } else if (this.p.vx < 0) {
+          if(this.p.landed > 0) {
+            this.play("gerev_walk_left");
+          } else {
+            if (this.p.vy < 0) {
+              this.play("gerev_jump_left");
+            } else {
+              this.play("gerev_land_left");
+            }
+          }
+          this.p.direction = "left";
+        } else {
+          if (this.p.vy < 0) {
+            this.play("gerev_jump_" + this.p.direction);
+          } else if (this.p.vy >0) {
+            this.play("gerev_land_" + this.p.direction);
+          } else {
+            this.play("gerev_stand_" + this.p.direction);
+          }
         }
     }
   },
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
-    this.p.sheet = "gerev_glow";
+    // this.p.sheet = "gerev_glow";
   },
 
   stopInteraction: function() {
     this.p.ignoreControls = true;
-    this.p.sheet = "gerev";
+    // this.p.sheet = "gerev";
     this.p.vx = 0;
     this.p.vy = 0;
   }      
@@ -143,7 +175,8 @@ Q.Sprite.extend("Zemer",{
 
     // You can call the parent's constructor with this._super(..)
     this._super(p, {
-      sheet: "zemer",  // Setting a sprite sheet sets sprite width and height
+      sheet: "zemer_walk",  // Setting a sprite sheet sets sprite width and height
+      sprite: "zemer",
       x: 690,           // You can also set additional properties that can
       y: 650,             // be overridden on object creation
       jumpSpeed: -600
@@ -151,7 +184,7 @@ Q.Sprite.extend("Zemer",{
 
 
 
-    this.add('2d, platformerControls');
+    this.add('2d, platformerControls, animation');
 
     // Write event handlers to respond hook into behaviors.
     // hit.sprite is called everytime the player collides with a sprite
@@ -165,6 +198,9 @@ Q.Sprite.extend("Zemer",{
         obj.turnOn();
       } 
       if (obj.isA("PowerUp")) {
+        if (!this.p.hasPowerUp) {
+          Q.audio.play('powerup.mp3');
+        }
         this.p.hasPowerUp = true;
         this.p.scale = 1.5;
         obj.p.opacity = 0;
@@ -176,23 +212,31 @@ Q.Sprite.extend("Zemer",{
 
   step: function(dt) {
     if (!this.p.ignoreControls) {
-        if(Q.inputs['left'] && this.p.direction == 'right') {
+        if(Q.inputs['left'] && this.p.direction == 'right') {           
             this.p.flip = false;
         } 
         if(Q.inputs['right']  && this.p.direction == 'left') {
             this.p.flip = 'x';                    
+        }
+        if(Q.inputs['left'] || Q.inputs['right']) {
+          if (this.p.direction == 'right') {
+            // Q.audio.play('zemer_walk.mp3');
+            this.play("zemer_walk_right");
+          } else {
+            this.play("zemer_walk_left");
+          }
         }
     }
   },
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
-    this.p.sheet = "zemer_glow";
+    // this.p.sheet = "zemer_glow";
   },
 
   stopInteraction: function() {
     this.p.ignoreControls = true;
-    this.p.sheet = "zemer";
+    // this.p.sheet = "zemer";
     this.p.vx = 0;
     this.p.vy = 0;
   }   
@@ -219,6 +263,8 @@ Q.Sprite.extend("Erez",{
 // Create a new scene called level 1
 Q.scene("level1",function(stage) {
 
+  Q.audio.enableHTML5Sound();
+
   // Add in a repeater for a little parallax action
   stage.insert(new Q.Repeater({ asset: "background-wall.png", speedX: 0.5, speedY: 0.5 }));
 
@@ -237,22 +283,6 @@ Q.scene("level1",function(stage) {
   zemer.p.direction = 'left';
   gerev.restoreInteraction();
   zemer.stopInteraction();
-
-  /*
-
-Switch1: 22 by 2 => opens up (31, 19) and (32, 19)
-Switch2: 22 by 20 => opens up (7, 19), (7, 20), (7, 21), (7, 22)
-Switch3: 34 by 19 => adds up (16, 20), (17, 18)
-Switch4: 13 by 17 => opesn up (30, 15), (30, 16), (30, 17), (30, 18)
-Switch5: 31 by 12 => adds up (1, 17), (1, 15)
-Switch6: 5 by 12 => opens up (34, 9), (35, 9)
-Swtich7: 29 by 7 => adds up (8, 14)
-Switch8: 13 by 12 => opens up (27, 5), (27, 6), (27, 7), (27, 8)
-Switch9: 27 by 17 => adds up (17 ,12), (16, 10)
-Swtich10: 3 by 7 => opens up (21, 9), (22, 9)
-Switch11: 20 by 7 => adds up (7, 7), (8, 5)
-
-*/
 
   switches = [
     {
@@ -335,14 +365,15 @@ Switch11: 20 by 7 => adds up (7, 7), (8, 5)
 });
 
 Q.load(
-  "tiles.png, spacebar.png, arrows.png, erez.png, gerev.png, gerev_glow.png, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
+  "gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, spacebar.png, arrows.png, erez.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
   function() {
+    Q.compileSheets("zemer_walk.png","zemer_walk.json");
+    Q.compileSheets("gerev_walk.png","gerev_walk.json");
+
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
     Q.sheet("erez","erez.png", { tilew: 420, tileh: 647 });
-    Q.sheet("gerev","gerev.png", { tilew: 32, tileh: 32 });
     Q.sheet("gerev_glow","gerev_glow.png", { tilew: 32, tileh: 32 });
-    Q.sheet("zemer","zemer.png", { tilew: 32, tileh: 32 });
     Q.sheet("zemer_glow","zemer_glow.png", { tilew: 32, tileh: 32 });
     Q.sheet("ladder","ladder.png", { tilew: 32, tileh: 32 });
     Q.sheet("stone","stone.png", { tilew: 32, tileh: 32 });
@@ -354,6 +385,28 @@ Q.load(
     // Or from a .json asset that defines sprite locations
     // Q.compileSheets("sprites.png","sprites.json");
 
+    Q.animations("zemer", {
+      zemer_walk_left: { frames: [0,1,2,3,4,5], rate: 1/15, flip: false, loop: false},
+      zemer_walk_right: { frames: [0,1,2,3,4,5], rate: 1/15, flip: "x", loop: false},
+      zemer_jump_left: { frames: [3], rate: 1/15, flip: false, loop: false},
+      zemer_jump_right: { frames: [3], rate: 1/15, flip: "x", loop: false},
+      zemer_land_left: { frames: [0], rate: 1/15, flip: false, loop: false},
+      zemer_land_right: { frames: [0], rate: 1/15, flip: "x", loop: false},
+      zemer_stand_left: { frames: [5], rate: 1/15, flip: false, loop: false},
+      zemer_stand_right: { frames: [5], rate: 1/15, flip: "x", loop: false}
+    });
+
+    Q.animations("gerev", {
+      gerev_walk_left: { frames: [0,1,2,3,4,5], rate: 1/15, flip: false, loop: false},
+      gerev_walk_right: { frames: [0,1,2,3,4,5], rate: 1/15, flip: "x", loop: false},
+      gerev_jump_left: { frames: [3], rate: 1/15, flip: false, loop: false},
+      gerev_jump_right: { frames: [3], rate: 1/15, flip: "x", loop: false},
+      gerev_land_left: { frames: [0], rate: 1/15, flip: false, loop: false},
+      gerev_land_right: { frames: [0], rate: 1/15, flip: "x", loop: false},
+      gerev_stand_left: { frames: [5], rate: 1/15, flip: false, loop: false},
+      gerev_stand_right: { frames: [5], rate: 1/15, flip: "x", loop: false}
+    });
+
     // Finally, call stageScene to run the game
     Q.stageScene("level1");
 
@@ -361,6 +414,7 @@ Q.load(
 
 Q.el.addEventListener('keydown',function(e) {
   if (e.code=='Space') {
+    Q.audio.play('switch_rabbit.mp3');
     Q.GameStatus.currentPlayer = Q.GameStatus.currentPlayer == "Gerev" ? "Zemer" : "Gerev";
     Q.currentRabbitLogo.p.asset = Q.GameStatus.currentPlayer.toLowerCase() + ".png";
     if (Q.GameStatus.currentPlayer == "Zemer") {
