@@ -297,7 +297,8 @@ Q.Sprite.extend("Radio",{
 
     this.on("bump.top",function(collision) {
       var obj = collision.obj;
-      if(obj.isA("Stone")) { 
+      if(obj.isA("Stone") && !this.p.playedColoringAnimation) { 
+           this.p.playedColoringAnimation = true;
            this.play("radio_coloring");
       } 
     });
@@ -457,7 +458,7 @@ Q.load(
     });
 
     Q.animations("radio", {
-      radio_coloring: { frames: [0,1,2,3,4], rate: 1/4, flip: false, loop: false}
+      radio_coloring: { frames: [0,0,1,1,2,2,3,3,4,4,0,0,1,1,2,2,3,3,4,4], rate: 1/8, flip: false, loop: false}
     });
 
     // Finally, call stageScene to run the game
