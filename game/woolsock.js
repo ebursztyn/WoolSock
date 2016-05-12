@@ -173,6 +173,7 @@ Q.Sprite.extend("Gerev",{
   },
 
   stopInteraction: function() {
+    this.play("gerev_stand_" + this.p.direction);
     this.p.ignoreControls = true;
     // this.p.sheet = "gerev";
     this.p.vx = 0;
@@ -270,6 +271,7 @@ Q.Sprite.extend("Zemer",{
   },
 
   stopInteraction: function() {
+    this.play("zemer_stand_" + this.p.direction);
     this.p.ignoreControls = true;
     // this.p.sheet = "zemer";
     this.p.vx = 0;
@@ -396,11 +398,13 @@ Q.scene("level1",function(stage) {
 
   var currentRabbitLogo = Q.currentRabbitLogo = stage.insert(new Q.Sprite({x: 75, y: 24, asset: "gerev.png", sensor: true}));
 
+  /*
   stage.insert(new Q.UI.Text({x:750, y: 13, opacity: 1, label: "הזזת ארנב" }));
   stage.insert(new Q.Sprite({x: 850, y: 28, scale: 0.5, opacity: 1, asset: "arrows.png", sensor: true}));
 
   stage.insert(new Q.UI.Text({x:740, y: 51, opacity: 1, label: "החלפת ארנב" }));
   stage.insert(new Q.Sprite({x: 850, y: 66, scale: 0.5, asset: "spacebar.png", sensor: true}));
+  */
 
   // Create the player and add them to the stage
   var gerev = Q.gerev = stage.insert(new Q.Gerev());
