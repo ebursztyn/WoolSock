@@ -310,14 +310,6 @@ Q.scene("level1",function(stage) {
 
   var erez = Q.erez = stage.insert(new Q.Erez());
 
-  // Create the player and add them to the stage
-  var gerev = Q.gerev = stage.insert(new Q.Gerev());
-  var zemer = Q.zemer = stage.insert(new Q.Zemer());
-  gerev.p.direction = 'left';
-  zemer.p.direction = 'left';
-  gerev.restoreInteraction();
-  zemer.stopInteraction();
-
   switches = [
     {
       x: 2, 
@@ -395,6 +387,14 @@ Q.scene("level1",function(stage) {
 
   stage.insert(new Q.UI.Text({x:740, y: 51, opacity: 1, label: "החלפת ארנב" }));
   stage.insert(new Q.Sprite({x: 850, y: 66, scale: 0.5, asset: "spacebar.png", sensor: true}));
+
+  // Create the player and add them to the stage
+  var gerev = Q.gerev = stage.insert(new Q.Gerev());
+  var zemer = Q.zemer = stage.insert(new Q.Zemer());
+  gerev.p.direction = 'left';
+  zemer.p.direction = 'left';
+  gerev.restoreInteraction();
+  zemer.stopInteraction();
 
 });
 
