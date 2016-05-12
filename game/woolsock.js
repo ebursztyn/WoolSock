@@ -302,7 +302,7 @@ Q.scene("level1",function(stage) {
 
   // Add in a repeater for a little parallax action
   //stage.insert(new Q.Repeater({ asset: "background-wall.png", speedX: 0.5, speedY: 0.5 }));
-  var clouds = stage.insert(new Q.Sprite({ sheet: "clouds", x: 450, y: 100}));
+  // var clouds = stage.insert(new Q.Sprite({ sheet: "clouds", x: 450, y: 100}));
 
   // Add in a tile layer, and make it the collision layer
   var tileLayer = new Q.TileLayer({
@@ -408,7 +408,7 @@ Q.load(
 
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
-    Q.sheet("radio","radio.png", { tilew: 252, tileh: 299 });
+    Q.sheet("radio","radio.png", { tilew: 252, tileh: 217 });
     Q.sheet("clouds","mmc_map_clouds.png", { tilew: 800, tileh: 250 });
     Q.sheet("gerev_glow","gerev_glow.png", { tilew: 32, tileh: 32 });
     Q.sheet("zemer_glow","zemer_glow.png", { tilew: 32, tileh: 32 });
