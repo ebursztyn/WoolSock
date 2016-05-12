@@ -300,6 +300,7 @@ Q.scene("level1",function(stage) {
 
   // Add in a repeater for a little parallax action
   //stage.insert(new Q.Repeater({ asset: "background-wall.png", speedX: 0.5, speedY: 0.5 }));
+  var clouds = stage.insert(new Q.Sprite({ sheet: "clouds", x: 450, y: 100}));
 
   // Add in a tile layer, and make it the collision layer
   var tileLayer = new Q.TileLayer({
@@ -398,7 +399,7 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  "gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, spacebar.png, arrows.png, erez.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json", 
+  "gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, spacebar.png, arrows.png, erez.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json, mmc_map_clouds.png", 
   function() {
     Q.compileSheets("zemer_walk.png","zemer_walk.json");
     Q.compileSheets("gerev_walk.png","gerev_walk.json");
@@ -406,6 +407,7 @@ Q.load(
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
     Q.sheet("erez","erez.png", { tilew: 420, tileh: 647 });
+    Q.sheet("clouds","mmc_map_clouds.png", { tilew: 800, tileh: 250 });
     Q.sheet("gerev_glow","gerev_glow.png", { tilew: 32, tileh: 32 });
     Q.sheet("zemer_glow","zemer_glow.png", { tilew: 32, tileh: 32 });
     Q.sheet("ladder","ladder.png", { tilew: 32, tileh: 32 });
