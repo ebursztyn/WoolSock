@@ -162,6 +162,8 @@ Q.Sprite.extend("Gerev",{
             this.play("gerev_stand_" + this.p.direction);
           }
         }
+    } else {
+      this.play("gerev_stand_" + this.p.direction);
     }
   },
 
@@ -255,10 +257,10 @@ Q.Sprite.extend("Zemer",{
             this.play("zemer_jump_" + this.p.direction);
           } else if (this.p.vy >0) {
             this.play("zemer_land_" + this.p.direction);
-          } else {
-            this.play("zemer_stand_" + this.p.direction);
-          }
+          } 
         }
+    } else {
+      this.play("zemer_stand_" + this.p.direction);
     }
   },
 
