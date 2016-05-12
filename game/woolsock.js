@@ -100,6 +100,17 @@ Q.Sprite.extend("Gerev",{
 
     this.add('2d, platformerControls, animation');
 
+    this.on("jump", function(obj) {
+      if (!obj.p.playedJump) {
+        Q.audio.play('gerev_jump.mp3');
+        obj.p.playedJump = true;
+      }
+    });
+
+    this.on("jumped", function(obj) {
+        obj.p.playedJump = false;
+    });
+
     this.on("hit.sprite",function(collision) {
 
       var obj = collision.obj;
@@ -186,10 +197,15 @@ Q.Sprite.extend("Zemer",{
 
     this.add('2d, platformerControls, animation');
 
-    // Write event handlers to respond hook into behaviors.
-    // hit.sprite is called everytime the player collides with a sprite
-    this.on("jump", function(entity) {
-        
+    this.on("jump", function(obj) {
+      if (!obj.p.playedJump) {
+        Q.audio.play('zemer_jump.mp3');
+        obj.p.playedJump = true;
+      }
+    });
+
+    this.on("jumped", function(obj) {
+        obj.p.playedJump = false;
     });
 
     this.on("hit.sprite",function(collision) {
