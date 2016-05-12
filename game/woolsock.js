@@ -64,7 +64,7 @@ Q.Sprite.extend("Stone", {
       var obj = collision.obj;
       if(obj.isA("Gerev") || obj.isA("Zemer")) { 
          if (obj.p.hasPowerUp) {
-           Q.audio.play('pushing_stone.mp3');
+           // Q.audio.play('pushing_stone.mp3');
            this.p.vx = 50;
          }
       }
@@ -287,7 +287,7 @@ Q.Sprite.extend("Radio",{
     this._super(p, {
       sheet: "radio",  // Setting a sprite sheet sets sprite width and height
       x: 975,           // You can also set additional properties that can
-      y: 558,             // be overridden on object creation
+      y: 571,             // be overridden on object creation
       scale: 0.35
     });
   }
