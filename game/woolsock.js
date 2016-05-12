@@ -212,18 +212,35 @@ Q.Sprite.extend("Zemer",{
 
   step: function(dt) {
     if (!this.p.ignoreControls) {
-        if(Q.inputs['left'] && this.p.direction == 'right') {           
-            this.p.flip = false;
-        } 
-        if(Q.inputs['right']  && this.p.direction == 'left') {
-            this.p.flip = 'x';                    
-        }
-        if(Q.inputs['left'] || Q.inputs['right']) {
-          if (this.p.direction == 'right') {
-            // Q.audio.play('zemer_walk.mp3');
+        if(this.p.vx > 0) {
+          if(this.p.landed > 0) {
             this.play("zemer_walk_right");
           } else {
+            if (this.p.vy < 0) {
+              this.play("zemer_jump_right");
+            } else {
+              this.play("zemer_land_right");
+            }
+          }
+          this.p.direction = "right";
+        } else if (this.p.vx < 0) {
+          if(this.p.landed > 0) {
             this.play("zemer_walk_left");
+          } else {
+            if (this.p.vy < 0) {
+              this.play("zemer_jump_left");
+            } else {
+              this.play("zemer_land_left");
+            }
+          }
+          this.p.direction = "left";
+        } else {
+          if (this.p.vy < 0) {
+            this.play("zemer_jump_" + this.p.direction);
+          } else if (this.p.vy >0) {
+            this.play("zemer_land_" + this.p.direction);
+          } else {
+            this.play("zemer_stand_" + this.p.direction);
           }
         }
     }
