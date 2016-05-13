@@ -127,6 +127,14 @@ Q.Sprite.extend("Gerev",{
       } 
     });
 
+    this.on("anim.gerev_walk_right", function() {
+      Q.audio.play("gerev_walk.mp3");
+    });
+
+    this.on("anim.gerev_walk_left", function() {
+      Q.audio.play("gerev_walk.mp3");
+    });
+
   },
 
   step: function(dt) {
@@ -224,6 +232,14 @@ Q.Sprite.extend("Zemer",{
         this.p.scale = 1.5;
         obj.p.opacity = 0;
       } 
+    });
+
+    this.on("anim.zemer_walk_right", function() {
+      Q.audio.play("zemer_walk.mp3");
+    });
+
+    this.on("anim.zemer_walk_left", function() {
+      Q.audio.play("zemer_walk.mp3");
     });
 
 
