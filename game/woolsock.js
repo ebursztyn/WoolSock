@@ -66,7 +66,7 @@ Q.Sprite.extend("Stone", {
          if (obj.p.hasPowerUp) {
            // Q.audio.play('pushing_stone.mp3');
            this.p.vx = 60;
-         }
+         } 
       }
     });
 
@@ -308,6 +308,34 @@ Q.Sprite.extend("Radio",{
 
 });
 
+Q.Sprite.extend("Tv",{
+
+  // the init constructor is called on creation
+  init: function(p) {
+
+    // You can call the parent's constructor with this._super(..)
+    this._super(p, {
+      sheet: "tv",  // Setting a sprite sheet sets sprite width and height
+      sprite: "tv",
+      x: 1132,           // You can also set additional properties that can
+      y: 468,             // be overridden on object creation
+      scale: 1
+    });
+    this.add('animation');
+    
+    // this.p.playedColoringAnimation = false;
+
+    // this.on("bump.top",function(collision) {
+    //   var obj = collision.obj;
+    //   if(obj.isA("Stone") && !this.p.playedColoringAnimation) { 
+    //        this.p.playedColoringAnimation = true;
+    //        this.play("radio_coloring");
+    //   } 
+    // });
+  }
+
+});
+
 // ## Level1 scene
 // Create a new scene called level 1
 Q.scene("level1",function(stage) {
@@ -324,7 +352,8 @@ Q.scene("level1",function(stage) {
                              sheet:     'tiles' });
   stage.collisionLayer(tileLayer);
 
-  var radio = Q.radio = stage.insert(new Q.Radio());
+  // var radio = Q.radio = stage.insert(new Q.Radio());
+  var tv = Q.tv = stage.insert(new Q.Tv());
 
   switches = [
     {
@@ -417,7 +446,7 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  "gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, spacebar.png, arrows.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json, mmc_map_clouds.png, radio.png, radio_color.json, radio_color.png", 
+  "gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, spacebar.png, arrows.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json, mmc_map_clouds.png, tv.png, radio.png, radio_color.json, radio_color.png", 
   function() {
     Q.compileSheets("zemer_walk.png","zemer_walk.json");
     Q.compileSheets("gerev_walk.png","gerev_walk.json");
@@ -426,6 +455,7 @@ Q.load(
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
     Q.sheet("radio","radio.png", { tilew: 252, tileh: 217 });
+    Q.sheet("tv","tv.png", { tilew: 408, tileh: 281 });
     Q.sheet("clouds","mmc_map_clouds.png", { tilew: 800, tileh: 250 });
     Q.sheet("gerev_glow","gerev_glow.png", { tilew: 32, tileh: 32 });
     Q.sheet("zemer_glow","zemer_glow.png", { tilew: 32, tileh: 32 });
