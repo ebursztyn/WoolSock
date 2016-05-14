@@ -8,7 +8,8 @@ var Q = window.Q = Quintus()
         .controls().touch();
 
 Q.GameStatus = {
-  currentPlayer: "Gerev"
+  currentPlayer: "Gerev",
+  phase: "instructions" //from: instructions, game, invitation
 };
 
 Q.Sprite.extend("PowerUp", {
@@ -443,6 +444,8 @@ Q.scene("level1",function(stage) {
 
   var currentRabbitLogo = Q.currentRabbitLogo = stage.insert(new Q.Sprite({x: 75, y: 24, asset: "gerev.png", sensor: true}));
 
+  Q.instructions = stage.insert(new Q.Sprite({x: 512, y: 340, asset: "instructions1.png", sensor: true}));
+
   /*
   stage.insert(new Q.UI.Text({x:750, y: 13, opacity: 1, label: "הזזת ארנב" }));
   stage.insert(new Q.Sprite({x: 850, y: 28, scale: 0.5, opacity: 1, asset: "arrows.png", sensor: true}));
@@ -456,13 +459,13 @@ Q.scene("level1",function(stage) {
   var zemer = Q.zemer = stage.insert(new Q.Zemer());
   gerev.p.direction = 'left';
   zemer.p.direction = 'left';
-  gerev.restoreInteraction();
+  gerev.stopInteraction();
   zemer.stopInteraction();
 
 });
 
 Q.load(
-  "background_music.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, spacebar.png, arrows.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json, mmc_map_clouds.png, tv.png, radio.png, radio_color.json, radio_color.png", 
+  "background_music.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, spacebar.png, arrows.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json, mmc_map_clouds.png, tv.png, radio.png, radio_color.json, radio_color.png", 
   function() {
     Q.compileSheets("zemer_walk.png","zemer_walk.json");
     Q.compileSheets("gerev_walk.png","gerev_walk.json");
@@ -514,12 +517,18 @@ Q.load(
     // Finally, call stageScene to run the game
     Q.stageScene("level1");
 
-    Q.audio.play("background_music.mp3", {loop: true});
+//     Q.audio.play("background_music.mp3", {loop: true});
 
 });
 
 Q.el.addEventListener('keydown',function(e) {
-  if (e.code=='Space') {
+  if (Q.GameStatus.phase == "instructions") {
+    Q.GameStatus.phase = "game";
+    Q.instructions.p.opacity = 0.0;
+//     Q.audio.stop("background_music.mp3");
+    Q.gerev.restoreInteraction();
+  }
+  if (e.code=='Space' && Q.GameStatus.phase == "game") {
     Q.audio.play('switch_rabbit.mp3');
     Q.GameStatus.currentPlayer = Q.GameStatus.currentPlayer == "Gerev" ? "Zemer" : "Gerev";
     Q.currentRabbitLogo.p.asset = Q.GameStatus.currentPlayer.toLowerCase() + ".png";
