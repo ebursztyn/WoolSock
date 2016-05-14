@@ -462,7 +462,7 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  "gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, spacebar.png, arrows.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json, mmc_map_clouds.png, tv.png, radio.png, radio_color.json, radio_color.png", 
+  "background_music.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, spacebar.png, arrows.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json, mmc_map_clouds.png, tv.png, radio.png, radio_color.json, radio_color.png", 
   function() {
     Q.compileSheets("zemer_walk.png","zemer_walk.json");
     Q.compileSheets("gerev_walk.png","gerev_walk.json");
@@ -513,6 +513,8 @@ Q.load(
 
     // Finally, call stageScene to run the game
     Q.stageScene("level1");
+
+    Q.audio.play("background_music.mp3", {loop: true});
 
 });
 
