@@ -140,6 +140,9 @@ Q.Sprite.extend("Gerev",{
 
   step: function(dt) {
     if (!this.p.ignoreControls) {
+        if(this.p.y < 0) {
+          this.p.vy = 0;
+        }
         if(this.p.vx > 0) {
           if(this.p.landed > 0) {
             this.play("gerev_walk_right");
@@ -248,6 +251,9 @@ Q.Sprite.extend("Zemer",{
 
   step: function(dt) {
     if (!this.p.ignoreControls) {
+        if(this.p.y < 0) {
+          this.p.vy = 0;
+        }
         if(this.p.vx > 0) {
           if(this.p.landed > 0) {
             this.play("zemer_walk_right");
@@ -352,7 +358,7 @@ Q.Sprite.extend("Tv",{
   },
 
   moveLeft: function() {
-    this.animate({x: 0, y: 468}, 10);
+    this.animate({x: -500, y: 468}, 10);
   }
 
 });
