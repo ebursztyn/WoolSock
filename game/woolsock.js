@@ -372,6 +372,7 @@ Q.Sprite.extend("Invitation",{
     // You can call the parent's constructor with this._super(..)
     this._super(p, {
       sheet: "invitation",  // Setting a sprite sheet sets sprite width and height
+      sensor: true,
       x: 1700,           // You can also set additional properties that can
       y: 340,             // be overridden on object creation
       z: 100
@@ -412,9 +413,6 @@ Q.scene("level1",function(stage) {
   stage.collisionLayer(tileLayer);
 
   // var radio = Q.radio = stage.insert(new Q.Radio());
-  var tv = Q.tv = stage.insert(new Q.Tv());
-  var invitation = Q.invitation = stage.insert(new Q.Invitation());
-
   switches = [
     {
       x: 2, 
@@ -469,7 +467,7 @@ Q.scene("level1",function(stage) {
     {
       x: 16, 
       y: 7, 
-      changes: [{x: 7, y: 8, to: 2}, {x: 8, y: 6, to: 2}]
+      changes: [{x: 7, y: 8, to: 2}, {x: 8, y: 6, to: 2}, {x: 8, y: 7, to: 1}]
     }
   ];
 
@@ -504,6 +502,9 @@ Q.scene("level1",function(stage) {
   zemer.p.direction = 'left';
   gerev.stopInteraction();
   zemer.stopInteraction();
+
+  var tv = Q.tv = stage.insert(new Q.Tv());
+  var invitation = Q.invitation = stage.insert(new Q.Invitation());
 
 });
 
