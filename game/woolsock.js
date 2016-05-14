@@ -336,19 +336,23 @@ Q.Sprite.extend("Tv",{
       sprite: "tv",
       x: 1132,           // You can also set additional properties that can
       y: 468,             // be overridden on object creation
-      scale: 1
+      z: 100
     });
-    this.add('animation');
+    this.add('animation, tween');
     
-    // this.p.playedColoringAnimation = false;
+    this.p.playedMoveAnimation = false;
 
-    // this.on("bump.top",function(collision) {
-    //   var obj = collision.obj;
-    //   if(obj.isA("Stone") && !this.p.playedColoringAnimation) { 
-    //        this.p.playedColoringAnimation = true;
-    //        this.play("radio_coloring");
-    //   } 
-    // });
+    this.on("hit.sprite",function(collision) {
+      var obj = collision.obj;
+      if(obj.isA("Stone") && !this.p.playedMoveAnimation) { 
+           this.p.playedMoveAnimation = true;
+           this.moveLeft();
+      } 
+    });
+  },
+
+  moveLeft: function() {
+    this.animate({x: 0, y: 468}, 10);
   }
 
 });
