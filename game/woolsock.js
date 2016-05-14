@@ -181,15 +181,17 @@ Q.Sprite.extend("Gerev",{
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
-    this.p.sprite = "gerev_glow";
-    this.p.sheet = "gerev_walk_glow";
+    // this.p.sprite = "gerev_glow";
+    // this.p.sheet = "gerev_walk_glow";
+    this.p.scale = 1.2;
   },
 
   stopInteraction: function() {
     this.play("gerev_stand_" + this.p.direction);
     this.p.ignoreControls = true;
-    this.p.sprite = "gerev"
-    this.p.sheet = "gerev_walk";
+    this.p.scale = 1;
+    // this.p.sprite = "gerev"
+    // this.p.sheet = "gerev_walk";
     this.p.vx = 0;
     this.p.vy = 0;
   }      
@@ -292,15 +294,15 @@ Q.Sprite.extend("Zemer",{
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
-    this.p.sprite = "zemer_glow";
-    this.p.sheet = "zemer_walk_glow";
+    // this.p.sprite = "zemer_glow";
+    // this.p.sheet = "zemer_walk_glow";
   },
 
   stopInteraction: function() {
     this.play("zemer_stand_" + this.p.direction);
     this.p.ignoreControls = true;
-    this.p.sprite = "zemer";
-    this.p.sheet = "zemer_walk";
+    // this.p.sprite = "zemer";
+    // this.p.sheet = "zemer_walk";
     this.p.vx = 0;
     this.p.vy = 0;
   }   
