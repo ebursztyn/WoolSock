@@ -353,6 +353,7 @@ Q.Sprite.extend("Tv",{
       if(obj.isA("Stone") && !this.p.playedMoveAnimation) { 
            this.p.playedMoveAnimation = true;
            this.moveLeft();
+           Q.GameStatus.phase = "invitation";
       } 
     });
   },
