@@ -181,13 +181,15 @@ Q.Sprite.extend("Gerev",{
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
-    // this.p.sheet = "gerev_glow";
+    this.p.sprite = "gerev_glow";
+    this.p.sheet = "gerev_walk_glow";
   },
 
   stopInteraction: function() {
     this.play("gerev_stand_" + this.p.direction);
     this.p.ignoreControls = true;
-    // this.p.sheet = "gerev";
+    this.p.sprite = "gerev"
+    this.p.sheet = "gerev_walk";
     this.p.vx = 0;
     this.p.vy = 0;
   }      
@@ -290,13 +292,15 @@ Q.Sprite.extend("Zemer",{
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
-    // this.p.sheet = "zemer_glow";
+    this.p.sprite = "zemer_glow";
+    this.p.sheet = "zemer_walk_glow";
   },
 
   stopInteraction: function() {
     this.play("zemer_stand_" + this.p.direction);
     this.p.ignoreControls = true;
-    // this.p.sheet = "zemer";
+    this.p.sprite = "zemer";
+    this.p.sheet = "zemer_walk";
     this.p.vx = 0;
     this.p.vy = 0;
   }   
@@ -480,10 +484,10 @@ Q.scene("level1",function(stage) {
 
   var stone = stage.insert(new Q.Stone());
 
-  var currentRabbitLabel = stage.insert(new Q.UI.Text({x:150, y: 10, 
-                                                   label: ":ארנב פעיל" }));
+  // var currentRabbitLabel = stage.insert(new Q.UI.Text({x:150, y: 10, 
+                                                   // label: ":ארנב פעיל" }));
 
-  var currentRabbitLogo = Q.currentRabbitLogo = stage.insert(new Q.Sprite({x: 75, y: 24, asset: "gerev.png", sensor: true}));
+  // var currentRabbitLogo = Q.currentRabbitLogo = stage.insert(new Q.Sprite({x: 75, y: 24, asset: "gerev.png", sensor: true}));
 
   Q.instructions = stage.insert(new Q.Sprite({x: 512, y: 340, asset: "instructions1.png", sensor: true}));
 
@@ -509,21 +513,20 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  "background_music.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, spacebar.png, arrows.png, gerev.png, gerev_glow.png, gerev_walk.png, gerev_walk.json, zemer_walk.png, zemer_walk.json, zemer.png, zemer_glow.png, carrot.png, stone.png, cabbage.png, ladder.png, on_switch.png, off_switch.png, background-wall.png, level.json, mmc_map_clouds.png, tv.png, radio.png, radio_color.json, radio_color.png, invitation.png", 
+  "background_music.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, spacebar.png, arrows.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, cabbage.png, on_switch.png, off_switch.png, background-wall.png, level.json, mmc_map_clouds.png, tv.png, invitation.png", 
   function() {
+    Q.compileSheets("zemer_walk_glow.png","zemer_walk_glow.json");
+    Q.compileSheets("gerev_walk_glow.png","gerev_walk_glow.json");
     Q.compileSheets("zemer_walk.png","zemer_walk.json");
     Q.compileSheets("gerev_walk.png","gerev_walk.json");
-    Q.compileSheets("radio_color.png","radio_color.json");
+    // Q.compileSheets("radio_color.png","radio_color.json");
 
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
     Q.sheet("invitation","invitation.png", { tilew: 521, tileh: 645 });
-    Q.sheet("radio","radio.png", { tilew: 252, tileh: 217 });
+    // Q.sheet("radio","radio.png", { tilew: 252, tileh: 217 });
     Q.sheet("tv","tv.png", { tilew: 408, tileh: 281 });
     Q.sheet("clouds","mmc_map_clouds.png", { tilew: 800, tileh: 250 });
-    Q.sheet("gerev_glow","gerev_glow.png", { tilew: 32, tileh: 32 });
-    Q.sheet("zemer_glow","zemer_glow.png", { tilew: 32, tileh: 32 });
-    Q.sheet("ladder","ladder.png", { tilew: 32, tileh: 32 });
     Q.sheet("stone","stone.png", { tilew: 32, tileh: 32 });
     Q.sheet("on_switch","on_switch.png", { tilew: 32, tileh: 32 });
     Q.sheet("off_switch","off_switch.png", { tilew: 32, tileh: 32 });
@@ -534,6 +537,17 @@ Q.load(
     // Q.compileSheets("sprites.png","sprites.json");
 
     Q.animations("zemer", {
+      zemer_walk_left: { frames: [0,1,2,3,4,5], rate: 1/15, flip: false, loop: false},
+      zemer_walk_right: { frames: [0,1,2,3,4,5], rate: 1/15, flip: "x", loop: false},
+      zemer_jump_left: { frames: [3], rate: 1/15, flip: false, loop: false},
+      zemer_jump_right: { frames: [3], rate: 1/15, flip: "x", loop: false},
+      zemer_land_left: { frames: [0], rate: 1/15, flip: false, loop: false},
+      zemer_land_right: { frames: [0], rate: 1/15, flip: "x", loop: false},
+      zemer_stand_left: { frames: [5], rate: 1/15, flip: false, loop: false},
+      zemer_stand_right: { frames: [5], rate: 1/15, flip: "x", loop: false}
+    });
+
+    Q.animations("zemer_glow", {
       zemer_walk_left: { frames: [0,1,2,3,4,5], rate: 1/15, flip: false, loop: false},
       zemer_walk_right: { frames: [0,1,2,3,4,5], rate: 1/15, flip: "x", loop: false},
       zemer_jump_left: { frames: [3], rate: 1/15, flip: false, loop: false},
@@ -555,9 +569,20 @@ Q.load(
       gerev_stand_right: { frames: [5], rate: 1/15, flip: "x", loop: false}
     });
 
-    Q.animations("radio", {
-      radio_coloring: { frames: [0,0,1,1,2,2,3,3,4,4,0,0,1,1,2,2,3,3,4,4], rate: 1/8, flip: false, loop: false}
+    Q.animations("gerev_glow", {
+      gerev_walk_left: { frames: [0,1,2,3,4,5], rate: 1/15, flip: false, loop: false},
+      gerev_walk_right: { frames: [0,1,2,3,4,5], rate: 1/15, flip: "x", loop: false},
+      gerev_jump_left: { frames: [3], rate: 1/15, flip: false, loop: false},
+      gerev_jump_right: { frames: [3], rate: 1/15, flip: "x", loop: false},
+      gerev_land_left: { frames: [0], rate: 1/15, flip: false, loop: false},
+      gerev_land_right: { frames: [0], rate: 1/15, flip: "x", loop: false},
+      gerev_stand_left: { frames: [5], rate: 1/15, flip: false, loop: false},
+      gerev_stand_right: { frames: [5], rate: 1/15, flip: "x", loop: false}
     });
+
+    // Q.animations("radio", {
+    //   radio_coloring: { frames: [0,0,1,1,2,2,3,3,4,4,0,0,1,1,2,2,3,3,4,4], rate: 1/8, flip: false, loop: false}
+    // });
 
     // Finally, call stageScene to run the game
     Q.stageScene("level1");
@@ -576,7 +601,7 @@ Q.el.addEventListener('keydown',function(e) {
   if (e.code=='Space' && Q.GameStatus.phase == "game") {
     Q.audio.play('switch_rabbit.mp3');
     Q.GameStatus.currentPlayer = Q.GameStatus.currentPlayer == "Gerev" ? "Zemer" : "Gerev";
-    Q.currentRabbitLogo.p.asset = Q.GameStatus.currentPlayer.toLowerCase() + ".png";
+    // Q.currentRabbitLogo.p.asset = Q.GameStatus.currentPlayer.toLowerCase() + ".png";
     if (Q.GameStatus.currentPlayer == "Zemer") {
       Q.zemer.restoreInteraction();
     } else {
