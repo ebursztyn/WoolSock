@@ -571,7 +571,7 @@ Q.Sprite.extend("Gerev",{
       sheet: "gerev_walk",  // Setting a sprite sheet sets sprite width and height
       sprite: "gerev",
       x: 450,           // You can also set additional properties that can
-      y: 50,             // be overridden on object creation
+      y: 650,             // be overridden on object creation
       jumpSpeed: -380
     });
 
@@ -682,7 +682,7 @@ Q.Sprite.extend("Zemer",{
       sheet: "zemer_walk",  // Setting a sprite sheet sets sprite width and height
       sprite: "zemer",
       x: 690,           // You can also set additional properties that can
-      y: 50,             // be overridden on object creation
+      y: 650,             // be overridden on object creation
       jumpSpeed: -600
     });
 
