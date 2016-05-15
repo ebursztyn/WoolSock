@@ -657,15 +657,15 @@ Q.Sprite.extend("Gerev",{
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
-    // this.p.sprite = "gerev_glow";
-    // this.p.sheet = "gerev_walk_glow";
+    this.p.sprite = "gerev_glow";
+    this.p.sheet = "gerev_walk_glow";
   },
 
-  stopInteraction: function() {
+  stopInteraction: function(keepGlow) {
     this.play("gerev_stand_" + this.p.direction);
     this.p.ignoreControls = true;
-    // this.p.sprite = "gerev"
-    // this.p.sheet = "gerev_walk";
+    this.p.sprite = keepGlow ? "gerev_glow" : "gerev";
+    this.p.sheet = keepGlow ? "gerev_walk_glow" : "gerev_walk";
     this.p.vx = 0;
     this.p.vy = 0;
   }      
@@ -768,15 +768,15 @@ Q.Sprite.extend("Zemer",{
 
   restoreInteraction: function() {
     this.p.ignoreControls = false;
-    // this.p.sprite = "zemer_glow";
-    // this.p.sheet = "zemer_walk_glow";
+    this.p.sprite = "zemer_glow";
+    this.p.sheet = "zemer_walk_glow";
   },
 
-  stopInteraction: function() {
+  stopInteraction: function(keepGlow) {
     this.play("zemer_stand_" + this.p.direction);
     this.p.ignoreControls = true;
-    // this.p.sprite = "zemer";
-    // this.p.sheet = "zemer_walk";
+    this.p.sprite = keepGlow ? "zemer_glow" : "zemer";
+    this.p.sheet = keepGlow ? "zemer_walk_glow" : "zemer_walk";
     this.p.vx = 0;
     this.p.vy = 0;
   }   
@@ -996,8 +996,8 @@ Q.scene("level1",function(stage) {
   var zemer = Q.zemer = stage.insert(new Q.Zemer());
   gerev.p.direction = 'left';
   zemer.p.direction = 'left';
-  gerev.stopInteraction();
-  zemer.stopInteraction();
+  gerev.stopInteraction(true);
+  zemer.stopInteraction(true);
 
   var tv = Q.tv = stage.insert(new Q.Tv());
   Q.tvScreen = stage.insert(new Q.Sprite({x: 200, y: 200, asset: "tetaaru00025.png", sensor: true, opacity: 0}));
@@ -1089,6 +1089,7 @@ Q.el.addEventListener('keydown',function(e) {
     Q.instructions.animate({opacity: 0.0}, 0.4);
     Q.audio.stop("background_music.mp3");
     Q.gerev.restoreInteraction();
+    Q.zemer.stopInteraction();
   }
   if (e.code=='Space' && Q.GameStatus.phase == "game") {
     Q.audio.play('switch_rabbit.mp3');
