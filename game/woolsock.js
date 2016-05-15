@@ -523,7 +523,7 @@ Q.Sprite.extend("Stone", {
   init: function(p) {
     this._super(p, { 
       sheet: "stone",
-      x: 950,
+      x: 550,
       y: 55
     });
 
