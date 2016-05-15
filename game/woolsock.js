@@ -543,7 +543,7 @@ Q.Sprite.extend("Stone", {
   goRight: function() {
       this.p.opacity = 0.0;
       this.del('2d');
-      this.animate({x: this.p.x+1130, y: this.p.y}, 10);
+      this.animate({x: this.p.x+1130, y: this.p.y}, 11);
   }
   
 });
@@ -809,6 +809,8 @@ Q.Sprite.extend("Tv",{
            Q.gerev.stopInteraction();
            Q.zemer.stopInteraction();
 
+           Q.audio.play("song.mp3", {loop: true});
+
            Q.tvScreen.p.opacity = 1;
 
            var tv = this;
@@ -861,7 +863,7 @@ Q.Sprite.extend("Invitation",{
       sheet: "invitation",  // Setting a sprite sheet sets sprite width and height
       sensor: true,
       opacity: 0.0,
-      x: 1900,           // You can also set additional properties that can
+      x: 1850,           // You can also set additional properties that can
       y: 340,             // be overridden on object creation
       z: 100
     });
@@ -1000,7 +1002,7 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  SONG_FRAMES.toString() + ", background_music.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, cabbage.png, on_switch.png, off_switch.png, background-wall.png, level.json, tv.png, invitation.png",
+  SONG_FRAMES.toString() + ", background_music.mp3, song.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, cabbage.png, on_switch.png, off_switch.png, background-wall.png, level.json, tv.png, invitation.png",
   function() {
     Q.compileSheets("zemer_walk_glow.png","zemer_walk_glow.json");
     Q.compileSheets("gerev_walk_glow.png","gerev_walk_glow.json");
