@@ -1079,7 +1079,7 @@ Q.load(
     // Finally, call stageScene to run the game
     Q.stageScene("level1");
 
-//     Q.audio.play("background_music.mp3", {loop: true});
+    Q.audio.play("background_music.mp3");
 
 });
 
@@ -1087,7 +1087,7 @@ Q.el.addEventListener('keydown',function(e) {
   if (Q.GameStatus.phase == "instructions") {
     Q.GameStatus.phase = "game";
     Q.instructions.animate({opacity: 0.0}, 0.4);
-//     Q.audio.stop("background_music.mp3");
+    Q.audio.stop("background_music.mp3");
     Q.gerev.restoreInteraction();
   }
   if (e.code=='Space' && Q.GameStatus.phase == "game") {
