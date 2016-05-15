@@ -534,16 +534,27 @@ Q.Sprite.extend("Stone", {
       if(obj.isA("Gerev") || obj.isA("Zemer")) { 
          if (obj.p.hasPowerUp) {
            // Q.audio.play('pushing_stone.mp3');
-           this.p.vx = 60;
+           this.p.vx = 120;
          } 
       }
     });
+
+    this.on("bump.bottom",function(collision) {
+        this.p.vx = 0;
+    });
+
   },
 
   goRight: function() {
       this.p.opacity = 0.0;
       this.del('2d');
       this.animate({x: this.p.x+1130, y: this.p.y}, 11);
+  },
+
+  step: function(dt) {
+    if (this.p.vy > 0) { //falling
+      this.p.vx = 50;
+    } 
   }
   
 });
@@ -560,7 +571,7 @@ Q.Sprite.extend("Gerev",{
       sheet: "gerev_walk",  // Setting a sprite sheet sets sprite width and height
       sprite: "gerev",
       x: 450,           // You can also set additional properties that can
-      y: 650,             // be overridden on object creation
+      y: 50,             // be overridden on object creation
       jumpSpeed: -380
     });
 
@@ -671,7 +682,7 @@ Q.Sprite.extend("Zemer",{
       sheet: "zemer_walk",  // Setting a sprite sheet sets sprite width and height
       sprite: "zemer",
       x: 690,           // You can also set additional properties that can
-      y: 650,             // be overridden on object creation
+      y: 50,             // be overridden on object creation
       jumpSpeed: -600
     });
 
@@ -794,8 +805,6 @@ Q.Sprite.extend("Tv",{
       var obj = collision.obj;
       if(obj.isA("Stone") && !this.p.playedMoveAnimation) { 
            this.p.playedMoveAnimation = true;
-           // this.moveLeft();
-//            obj.p.opacity = 0.0;
           
            var viewport = Q.currentStage.add("viewport");
            obj.p.x = 512;
@@ -1002,7 +1011,7 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  SONG_FRAMES.toString() + ", background_music.mp3, song.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, cabbage.png, on_switch.png, off_switch.png, background-wall.png, level.json, tv.png, invitation.png",
+  SONG_FRAMES.toString() + ", background_music.mp3, song.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, cabbage.png, on_switch.png, off_switch.png, level.json, tv.png, invitation.png",
   function() {
     Q.compileSheets("zemer_walk_glow.png","zemer_walk_glow.json");
     Q.compileSheets("gerev_walk_glow.png","gerev_walk_glow.json");
