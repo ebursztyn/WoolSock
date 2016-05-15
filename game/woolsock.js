@@ -523,11 +523,11 @@ Q.Sprite.extend("Stone", {
   init: function(p) {
     this._super(p, { 
       sheet: "stone",
-      x: 550,
-      y: 55, 
+      x: 950,
+      y: 55
     });
 
-    this.add('2d');
+    this.add('2d, animate, tween');
 
     this.on("bump.left",function(collision) {
       var obj = collision.obj;
@@ -538,6 +538,12 @@ Q.Sprite.extend("Stone", {
          } 
       }
     });
+  },
+
+  goRight: function() {
+      this.p.opacity = 0.0;
+      this.del('2d');
+      this.animate({x: this.p.x+1130, y: this.p.y}, 10);
   }
   
 });
@@ -775,6 +781,7 @@ Q.Sprite.extend("Tv",{
     this._super(p, {
       sheet: "tv",  // Setting a sprite sheet sets sprite width and height
       sprite: "tv",
+      scale: 1,
       x: 1043,           // You can also set additional properties that can
       y: 530,             // be overridden on object creation
       z: 100
@@ -787,9 +794,24 @@ Q.Sprite.extend("Tv",{
       var obj = collision.obj;
       if(obj.isA("Stone") && !this.p.playedMoveAnimation) { 
            this.p.playedMoveAnimation = true;
-           this.moveLeft();
+           // this.moveLeft();
+//            obj.p.opacity = 0.0;
+          
+           var viewport = Q.currentStage.add("viewport");
+           obj.p.x = 512;
+           obj.p.y = 384;
+           viewport.follow(obj);
+           obj.goRight();
+
+           this.moveRight();
+
            Q.GameStatus.phase = "invitation";
+           Q.gerev.stopInteraction();
+           Q.zemer.stopInteraction();
+
            Q.tvScreen.p.opacity = 1;
+
+           var tv = this;
 
            setInterval(function() {
               if (Q.GameStatus.phase=="invitation" && Q.tvScreen.p.opacity==1) {
@@ -797,17 +819,34 @@ Q.Sprite.extend("Tv",{
                 Q.tvScreen.animIndex++;
               }
             }, 1000 * 10 / 60);
+
+            setTimeout(function() {
+              if (Q.GameStatus.phase=="invitation" && Q.tvScreen.p.opacity==1) {
+                tv.moveLeft();
+              }
+            }, 15000);
+
+            setTimeout(function() {
+              if (Q.GameStatus.phase=="invitation" && Q.tvScreen.p.opacity==1) {
+                Q.invitation.show();
+              }
+            }, 20000);
       } 
     });
   },
 
   moveLeft: function() {
-    this.animate({x: 300, y: 530}, 11);
+    this.animate({x: this.p.x - 250, y: this.p.y}, 3);
+  },
+
+  moveRight: function() {
+    this.animate({x: 1580, y: 384, scale: 1.5}, 11);
   },
 
   step: function(dt) {
-    Q.tvScreen.p.x = this.p.x+17;
-    Q.tvScreen.p.y = this.p.y-10;
+    Q.tvScreen.p.x = this.p.x+(17*this.p.scale);
+    Q.tvScreen.p.y = this.p.y-(10*this.p.scale);;
+    Q.tvScreen.p.scale = this.p.scale || 1;
   }
 
 });
@@ -821,7 +860,8 @@ Q.Sprite.extend("Invitation",{
     this._super(p, {
       sheet: "invitation",  // Setting a sprite sheet sets sprite width and height
       sensor: true,
-      x: 1420,           // You can also set additional properties that can
+      opacity: 0.0,
+      x: 1900,           // You can also set additional properties that can
       y: 340,             // be overridden on object creation
       z: 100
     });
@@ -834,12 +874,16 @@ Q.Sprite.extend("Invitation",{
   step: function(dt) {
       if(Q.GameStatus.phase == "invitation" && !this.p.playedMoveAnimation) { 
            this.p.playedMoveAnimation = true;
-           this.moveLeft();
+           // this.moveLeft();
       }
   },
 
   moveLeft: function() {
     this.animate({x: 680, y: 340}, 12);
+  },
+
+  show: function() {
+    this.animate({opacity: 1}, 1);
   }
 
 });
@@ -950,6 +994,8 @@ Q.scene("level1",function(stage) {
   Q.tvScreen.animIndex = 0;
 
   var invitation = Q.invitation = stage.insert(new Q.Invitation());
+
+  Q.currentStage = stage;
 
 });
 
