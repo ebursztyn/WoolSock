@@ -815,8 +815,8 @@ Q.Sprite.extend("Tv",{
            this.moveRight();
 
            Q.GameStatus.phase = "invitation";
-           Q.gerev.stopInteraction();
-           Q.zemer.stopInteraction();
+           Q.gerev.stopInteraction(true);
+           Q.zemer.stopInteraction(true);
 
            Q.audio.play("song.mp3", {loop: true});
 
