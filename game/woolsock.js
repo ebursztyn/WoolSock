@@ -934,6 +934,7 @@ Q.scene("level1",function(stage) {
   // var currentRabbitLogo = Q.currentRabbitLogo = stage.insert(new Q.Sprite({x: 75, y: 24, asset: "gerev.png", sensor: true}));
 
   Q.instructions = stage.insert(new Q.Sprite({x: 512, y: 340, asset: "instructions1.png", sensor: true}));
+  Q.instructions.add('animation, tween');
 
   // Create the player and add them to the stage
   var gerev = Q.gerev = stage.insert(new Q.Gerev());
@@ -1028,7 +1029,7 @@ Q.load(
 Q.el.addEventListener('keydown',function(e) {
   if (Q.GameStatus.phase == "instructions") {
     Q.GameStatus.phase = "game";
-    Q.instructions.p.opacity = 0.0;
+    Q.instructions.animate({opacity: 0.0}, 0.4);
 //     Q.audio.stop("background_music.mp3");
     Q.gerev.restoreInteraction();
   }
