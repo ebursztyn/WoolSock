@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
-<title>גרב וצמר</title>
+<title>מישל וארז</title>
 <script src='../lib/quintus.js'></script>
 <script src='../lib/quintus_sprites.js'></script>
 <script src='../lib/quintus_scenes.js'></script>
@@ -18,7 +18,7 @@
 <script src='woolsock.js'></script>
 <style> 
   body { 
-  	padding:0px; margin:0px; background-color: #87CEFA; margin:auto; 
+  	padding:0px; margin:0px; background-color: #4BC8F2; margin:auto; 
   } 
       #loading {
       margin:50px auto;
@@ -46,17 +46,20 @@
       height:40px;
       top:0px;
       left:0px;
-      opacity:0.4;
+      opacity:0.5;
     }
 </style>
 </head>
 <body>
-   <div id='loading' style="position:absolute;left:500px;top:280px">
+   <div id='loading' style="position:absolute;left:450px;top:100px">
+   	<div id='pic'>     
+   		<img src="opening.gif" width="250" height="177"> 
+   	</div>
       <div id='loading_container'>
         ...טוען
         <div id='loading_progress'></div>
       </div>
     </div>
-	<canvas id="game" width="1024" height="768";></canvas>
+	<canvas id="game" width="1024" height="736";></canvas>
 </body>
 </html>

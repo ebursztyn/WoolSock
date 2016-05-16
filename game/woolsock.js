@@ -1014,7 +1014,13 @@ Q.load(
   SONG_FRAMES.toString() + ", background_music.mp3, song.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, cabbage.png, on_switch.png, off_switch.png, level.json, tv.png, invitation.png",
   function() {
     var loading = document.getElementById('loading');
+    var pic = document.getElementById('pic');
+    pic.parentNode.removeChild(pic);
     loading.style.opacity = 0;
+
+    document.getElementById("game").style.backgroundColor = 'rgba(135, 206, 250, 1)';
+
+   
 
     Q.compileSheets("zemer_walk_glow.png","zemer_walk_glow.json");
     Q.compileSheets("gerev_walk_glow.png","gerev_walk_glow.json");
