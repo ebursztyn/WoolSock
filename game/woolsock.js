@@ -522,18 +522,19 @@ Q.Sprite.extend("Stone", {
 
   init: function(p) {
     this._super(p, { 
-      sheet: "stone",
+      sheet: "stone_spin",
+      sprite: "stone",
       x: 550,
       y: 55
     });
 
-    this.add('2d, animate, tween');
+    this.add('2d, animation, animate, tween');
 
     this.on("bump.left",function(collision) {
       var obj = collision.obj;
       if(obj.isA("Gerev") || obj.isA("Zemer")) { 
          if (obj.p.hasPowerUp) {
-           // Q.audio.play('pushing_stone.mp3');
+           this.play("stone_spin");
            this.p.vx = 120;
          } 
       }
@@ -818,6 +819,7 @@ Q.Sprite.extend("Tv",{
            Q.gerev.stopInteraction(true);
            Q.zemer.stopInteraction(true);
 
+           Q.audio.stop();
            Q.audio.play("song.mp3", {loop: true});
 
            Q.tvScreen.p.opacity = 1;
@@ -847,11 +849,11 @@ Q.Sprite.extend("Tv",{
   },
 
   moveLeft: function() {
-    this.animate({x: this.p.x - 250, y: this.p.y}, 3);
+    this.animate({x: this.p.x - 300, y: this.p.y}, 3);
   },
 
   moveRight: function() {
-    this.animate({x: 1580, y: 384, scale: 1.5}, 11);
+    this.animate({x: 1660, y: 384, scale: 1.5}, 11);
   },
 
   step: function(dt) {
@@ -873,7 +875,7 @@ Q.Sprite.extend("Invitation",{
       sensor: true,
       opacity: 0.0,
       x: 1850,           // You can also set additional properties that can
-      y: 340,             // be overridden on object creation
+      y: 380,             // be overridden on object creation
       z: 100
     });
     this.add('animation, tween');
@@ -1011,7 +1013,7 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  SONG_FRAMES.toString() + ", background_music.mp3, song.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, cabbage.png, on_switch.png, off_switch.png, level.json, tv.png, invitation.png",
+  SONG_FRAMES.toString() + ", background_music.mp3, song.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, stone_spin.png, stone_spin.json, cabbage.png, on_switch.png, off_switch.png, level.json, tv.png, invitation.png",
   function() {
     var loading = document.getElementById('loading');
     var pic = document.getElementById('pic');
@@ -1026,6 +1028,7 @@ Q.load(
     Q.compileSheets("gerev_walk_glow.png","gerev_walk_glow.json");
     Q.compileSheets("zemer_walk.png","zemer_walk.json");
     Q.compileSheets("gerev_walk.png","gerev_walk.json");
+    Q.compileSheets("stone_spin.png","stone_spin.json");
 
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
     Q.sheet("invitation","invitation.png", { tilew: 521, tileh: 644 });
@@ -1078,6 +1081,10 @@ Q.load(
       gerev_land_right: { frames: [0], rate: 1/15, flip: "x", loop: false},
       gerev_stand_left: { frames: [5], rate: 1/15, flip: false, loop: false},
       gerev_stand_right: { frames: [5], rate: 1/15, flip: "x", loop: false}
+    });
+
+    Q.animations("stone", {
+      stone_spin: { frames: [0,1,2,3], rate: 1/15, flip: false, loop: false},
     });
 
     // Finally, call stageScene to run the game
