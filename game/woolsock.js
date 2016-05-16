@@ -1021,7 +1021,7 @@ Q.load(
 
     // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
-    Q.sheet("invitation","invitation.png", { tilew: 521, tileh: 645 });
+    Q.sheet("invitation","invitation.png", { tilew: 521, tileh: 644 });
     Q.sheet("tv","tv.png", { tilew: 230, tileh: 158 });
     Q.sheet("stone","stone.png", { tilew: 32, tileh: 32 });
     Q.sheet("on_switch","on_switch.png", { tilew: 32, tileh: 32 });
