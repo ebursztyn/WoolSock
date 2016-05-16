@@ -1011,15 +1011,16 @@ Q.scene("level1",function(stage) {
 });
 
 Q.load(
-  SONG_FRAMES.toString() + ", background_music.mp3, song.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, pushing_stone.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, cabbage.png, on_switch.png, off_switch.png, level.json, tv.png, invitation.png",
+  SONG_FRAMES.toString() + ", background_music.mp3, song.mp3, gerev_jump.mp3, gerev_walk.mp3, powerup.mp3, press_switch.mp3, switch_rabbit.mp3, zemer_jump.mp3, zemer_walk.mp3, tiles.png, instructions1.png, gerev_walk.png, gerev_walk_glow.png, gerev_walk.json, gerev_walk_glow.json, zemer_walk.png, zemer_walk_glow.png, zemer_walk.json, zemer_walk_glow.json, carrot.png, stone.png, cabbage.png, on_switch.png, off_switch.png, level.json, tv.png, invitation.png",
   function() {
+    var loading = document.getElementById('loading');
+    loading.style.opacity = 0;
+
     Q.compileSheets("zemer_walk_glow.png","zemer_walk_glow.json");
     Q.compileSheets("gerev_walk_glow.png","gerev_walk_glow.json");
     Q.compileSheets("zemer_walk.png","zemer_walk.json");
     Q.compileSheets("gerev_walk.png","gerev_walk.json");
-    // Q.compileSheets("radio_color.png","radio_color.json");
 
-    // Sprites sheets can be created manually
     Q.sheet("tiles","tiles.png", { tilew: 32, tileh: 32 });
     Q.sheet("invitation","invitation.png", { tilew: 521, tileh: 644 });
     Q.sheet("tv","tv.png", { tilew: 230, tileh: 158 });
@@ -1028,9 +1029,6 @@ Q.load(
     Q.sheet("off_switch","off_switch.png", { tilew: 32, tileh: 32 });
     Q.sheet("carrot","carrot.png", { tilew: 32, tileh: 32 });
     Q.sheet("cabbage","cabbage.png", { tilew: 32, tileh: 32 });
-
-    // Or from a .json asset that defines sprite locations
-    // Q.compileSheets("sprites.png","sprites.json");
 
     Q.animations("zemer", {
       zemer_walk_left: { frames: [0,1,2,3,4,5], rate: 1/15, flip: false, loop: false},
@@ -1081,7 +1079,13 @@ Q.load(
 
     Q.audio.play("background_music.mp3");
 
-});
+}, {
+  progressCallback: function(loaded,total) {
+    var element = document.getElementById("loading_progress");
+    element.style.width = Math.floor(loaded/total*100) + "%";
+  }
+} 
+);
 
 Q.el.addEventListener('keydown',function(e) {
   if (Q.GameStatus.phase == "instructions") {
